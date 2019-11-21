@@ -14,7 +14,8 @@ import torch.nn as nn
 import utils.util as util
 import data.util as data_util
 import models.archs.EDVR_arch as EDVR_arch
-import models.archs.my_EDVR_arch as my_EDVR_arch\
+import models.archs.my_EDVR_arch as my_EDVR_arch
+
 
 import time
 
@@ -27,9 +28,9 @@ def main():
     # configurations
     #################
     device = torch.device('cuda')
-    os.environ['CUDA_VISIBLE_DEVICES'] = '9'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     test_set = 'AI4K_val'    # Vid4 | YouKu10 | REDS4 | AI4K_val | zhibo | AI4K_val_bic
-    test_name = 'AI4K_val_250000'                 #     'AI4K_val_Denoise_A02_420000'
+    test_name = 'AI4K_val_A03_HF_450000'                 #     'AI4K_val_Denoise_A02_420000'
     data_mode = 'sharp_bicubic'    # sharp_bicubic | blur_bicubic
     N_in = 5
     
@@ -47,11 +48,11 @@ def main():
         test_dataset_folder = '../datasets/REDS4/{}'.format(data_mode)
         GT_dataset_folder = '../datasets/REDS4/GT'
     elif test_set == 'AI4K_val':
-        test_dataset_folder = '/home/yhliu/AI4K/val1_LR_png/'
-        GT_dataset_folder = '/home/yhliu/AI4K/val1_HR_png/'
+        test_dataset_folder = '/home/yhliu/AI4K/contest1/val1_LR_png/'
+        GT_dataset_folder = '/home/yhliu/AI4K/contest1/val1_HR_png/'
     elif test_set == 'AI4K_val_bic':
-        test_dataset_folder = '/home/yhliu/AI4K/val1_LR_png_bic/'
-        GT_dataset_folder = '/home/yhliu/AI4K/val1_HR_png_bic/'
+        test_dataset_folder = '/home/yhliu/AI4K/contest1/val1_LR_png_bic/'
+        GT_dataset_folder = '/home/yhliu/AI4K/contest1/val1_HR_png_bic/'
     elif test_set == 'zhibo':
         test_dataset_folder = '/data1/yhliu/SR_ZHIBO_VIDEO/Test_video_LR/'
         GT_dataset_folder = '/data1/yhliu/SR_ZHIBO_VIDEO/Test_video_HR/'
@@ -59,8 +60,9 @@ def main():
     flip_test = False
     
     #model_path = '../experiments/pretrained_models/EDVR_Vimeo90K_SR_L.pth'
-    model_path = '../experiments/A01b/models/250000_G.pth'
+    #model_path = '../experiments/A01b/models/250000_G.pth'
     #model_path = '../experiments/A02_predenoise/models/415000_G.pth'
+    model_path = '../experiments/A03_EDVR_AI4K_5in_64f_10b_scratch_wTSA_predenoise_HFenhancer/models/450000_G.pth'
 
 
 
@@ -71,8 +73,9 @@ def main():
     if data_mode == 'blur' or data_mode == 'blur_comp':
         predeblur, HR_in = True, True
 
-    model = EDVR_arch.EDVR(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
+    #model = EDVR_arch.EDVR(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
     #model = my_EDVR_arch.MYEDVR(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
+    model = my_EDVR_arch.MYEDVR_RES(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
     
 
 
@@ -113,8 +116,8 @@ def main():
 
     subfolder_l = sorted(glob.glob(osp.join(test_dataset_folder, '*')))
     subfolder_GT_l = sorted(glob.glob(osp.join(GT_dataset_folder, '*')))
-    #print(subfolder_l)
-    #print(subfolder_GT_l)
+    print(subfolder_l)
+    print(subfolder_GT_l)
     #exit()
     
     # for each subfolder
@@ -124,7 +127,7 @@ def main():
         save_subfolder = osp.join(save_folder, subfolder_name)
 
         img_path_l = sorted(glob.glob(osp.join(subfolder, '*')))
-        #print(img_path_l)
+        print(img_path_l)
         max_idx = len(img_path_l)
         if save_imgs:
             util.mkdirs(save_subfolder)
