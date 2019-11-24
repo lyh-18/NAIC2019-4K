@@ -33,6 +33,11 @@ class AI4KDataset(data.Dataset):
     def __init__(self, opt):
         super(AI4KDataset, self).__init__()
         self.opt = opt
+        if opt['video_class']:
+            self.video_class = opt['video_class']  # all | movie | cartoon | lego
+        else:
+            self.video_class = 'all'
+        
         # temporal augmentation
         self.interval_list = opt['interval_list']
         self.random_reverse = opt['random_reverse']
@@ -46,17 +51,51 @@ class AI4KDataset(data.Dataset):
         #### directly load image keys
         if self.data_type == 'lmdb':
             self.paths_GT, _ = util.get_image_paths(self.data_type, opt['dataroot_GT'])
+            train_list = []
+            if self.video_class == 'all':
+                pass
+            elif self.video_class == 'movie':
+                with open('data/movie_list.txt', 'r') as f:
+                    for line in f.readlines():
+                        line = line.strip()
+                        train_list.append(line)
+                    #print((train_list))
+                for item in self.paths_GT.copy():
+                    if item.split('_')[0] not in train_list:
+                        self.paths_GT.remove(item)                
+            elif self.video_class == 'cartoon':
+                with open('data/cartoon_list.txt', 'r') as f:
+                    for line in f.readlines():
+                        line = line.strip()
+                        train_list.append(line)
+                for item in self.paths_GT.copy():
+                    if item.split('_')[0] not in train_list:
+                        self.paths_GT.remove(item)
+            elif self.video_class == 'lego':
+                with open('data/lego_list.txt', 'r') as f:
+                    for line in f.readlines():
+                        line = line.strip()
+                        train_list.append(line)
+                for item in self.paths_GT.copy():
+                    if item.split('_')[0] not in train_list:
+                        self.paths_GT.remove(item)
+                        
             logger.info('Using lmdb meta info for cache keys.')
+        elif self.data_type == 'img':
+            self.paths_GT, _ = util.get_image_paths(self.data_type, opt['dataroot_GT'])
+            
         elif opt['cache_keys']:
             logger.info('Using cache keys: {}'.format(opt['cache_keys']))
             self.paths_GT = pickle.load(open(opt['cache_keys'], 'rb'))['keys']
-        else:
-            raise ValueError(
-                'Need to create cache keys (meta_info.pkl) by running [create_lmdb.py]')
+        #else:
+        #    raise ValueError(
+        #        'Need to create cache keys (meta_info.pkl) by running [create_lmdb.py]')
 
         
         
         assert self.paths_GT, 'Error: GT path is empty.'
+        #rint((self.paths_GT))
+        print(len(self.paths_GT))
 
         if self.data_type == 'lmdb':
             self.GT_env, self.LQ_env = None, None
@@ -107,8 +146,16 @@ class AI4KDataset(data.Dataset):
 
         scale = self.opt['scale']
         GT_size = self.opt['GT_size']
-        key = self.paths_GT[index]
-        name_a, name_b = key.split('_')
+        
+        if self.data_type == 'lmdb':
+            key = self.paths_GT[index]
+            name_a, name_b = key.split('_')
+            
+        elif self.data_type == 'img':
+            key = self.paths_GT[index]
+            name_a = key.split('/')[-2]
+            name_b = key.split('/')[-1].split('.')[0]
+        
         center_frame_idx = int(name_b)
 
         #### determine the neighbor frames
