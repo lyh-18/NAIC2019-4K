@@ -1,10 +1,10 @@
 #### general settings
-name: A02_EDVR_AI4K_5in_64f_10b_scratch_wTSA_predenoise
+name: A04_EDVR_AI4K_5in_64f_10b_scratch_wTSA_PreEnhance
 use_tb_logger: true
-model: my_video_base
+model: my_video_base   #### my_video_base | video_base
 distortion: sr
 scale: 4
-gpu_ids: [4,5,6,7]
+gpu_ids: [0,1,2,3]
 
 #### datasets
 datasets:
@@ -20,25 +20,26 @@ datasets:
 
     N_frames: 5
     use_shuffle: true
-    n_workers: 16  # per GPU
-    batch_size: 32
+    n_workers: 8  # per GPU
+    batch_size: 16
     GT_size: 256
     LQ_size: 64
     use_flip: true
     use_rot: true
     color: RGB
-  #val:
-  #  name: REDS4
-  #  mode: video_test
-  #  dataroot_GT: ../datasets/REDS4/GT
-  #  dataroot_LQ: ../datasets/REDS4/sharp_bicubic
-  #  cache_data: True
-  #  N_frames: 5
-  #  padding: new_info
+  
+  val:
+    name: REDS4
+    mode: video_test
+    dataroot_GT: /home/yhliu/AI4K/contest1/val1_HR_png_bic/
+    dataroot_LQ: /home/yhliu/AI4K/contest1/val1_LR_png_bic/
+    cache_data: True
+    N_frames: 5
+    padding: new_info
 
 #### network structures
 network_G:
-  which_model_G: MY_EDVR
+  which_model_G: MY_EDVR_PreEnhance    ### EDVR | MY_EDVR | MY_EDVR_RES | MY_EDVR_PreEnhance
   nf: 64
   nframes: 5
   groups: 8
@@ -50,9 +51,9 @@ network_G:
 
 #### path
 path:
-  pretrain_model_G: ~ #../experiments/pretrained_models/150000_G.pth
+  #pretrain_model_G: ~ #../experiments/pretrained_models/150000_G.pth
   strict_load: false
-  resume_state: ../experiments/A02_EDVR_AI4K_5in_64f_10b_scratch_wTSA_predenoise/training_state/110000.state 
+  #resume_state: ../experiments/A02_EDVR_AI4K_5in_64f_10b_scratch_wTSA_predenoise/training_state/110000.state 
 
 #### training settings: learning rate scheme, loss
 train:

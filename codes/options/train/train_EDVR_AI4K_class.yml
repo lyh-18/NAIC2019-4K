@@ -1,10 +1,10 @@
 #### general settings
-name: Class_cartoon_A01b_EDVR_AI4K_5in_64f_10b_pretrain_wTSA
+name: Class_cartoon_A01b_EDVR_AI4K_5in_64f_10b_pretrain_wTSA_4e-6
 use_tb_logger: true
 model: video_base
 distortion: sr
 scale: 4
-gpu_ids: [0,1,2,3]
+gpu_ids: [6,7,8,9]
 
 #### datasets
 datasets:
@@ -54,11 +54,11 @@ network_G:
 path:
   pretrain_model_G: ../experiments/A01b_EDVR_AI4K_5in_64f_10b_pretrain_wTSA/models/150000_G.pth
   strict_load: false
-  resume_state:  ~ #../experiments/A01xxx_EDVR_AI4K_5in_64f_10b_scratch_wTSA/training_state/45000.state
+  #resume_state:  ../experiments/Class_cartoon_A01b_EDVR_AI4K_5in_64f_10b_pretrain_wTSA/training_state/45000.state
 
 #### training settings: learning rate scheme, loss
 train:
-  lr_G: !!float 3e-4
+  lr_G: !!float 4e-6
   lr_scheme: CosineAnnealingLR_Restart
   beta1: 0.9
   beta2: 0.99

@@ -14,6 +14,8 @@ def create_model(opt):
         from .Video_base_model import VideoBaseModel as M
     elif model == 'my_video_base':
         from .my_Video_base_model import VideoBaseModel as M
+    elif model == 'my_video_pre_enhance':
+        from .my_Video_base_model import VideoBaseModel as M
     elif model == 'my_video_base_res':
         from .my_Video_base_res_model import VideoBaseModel as M
     else:
