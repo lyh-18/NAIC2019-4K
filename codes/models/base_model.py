@@ -81,16 +81,30 @@ class BaseModel():
             state_dict[key] = param.cpu()
         torch.save(state_dict, save_path)
 
-    def load_network(self, load_path, network, strict=True):
+    def load_network(self, load_path, network, strict=True, load_module='pcd_align'):
         if isinstance(network, nn.DataParallel) or isinstance(network, DistributedDataParallel):
             network = network.module
         load_net = torch.load(load_path)
+        
         load_net_clean = OrderedDict()  # remove unnecessary 'module.'
+        print('Loading module parameters: ', load_module)
         for k, v in load_net.items():
-            if k.startswith('module.'):
-                load_net_clean[k[7:]] = v
+            if load_module == 'all':
+                #print(k)
+                if k.startswith('module.'):
+                    load_net_clean[k[7:]] = v
+                else:
+                    load_net_clean[k] = v
             else:
-                load_net_clean[k] = v
+                if k.split('.')[0] == load_module:
+                    print(k)
+                    if k.startswith('module.'):
+                        load_net_clean[k[7:]] = v
+                    else:
+                        load_net_clean[k] = v
+                else:
+                    continue
+                    
         network.load_state_dict(load_net_clean, strict=strict)
 
     def save_training_state(self, epoch, iter_step):

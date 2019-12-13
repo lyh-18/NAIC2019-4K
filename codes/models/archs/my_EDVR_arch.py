@@ -294,10 +294,10 @@ class PreEnhance(nn.Module):
         
         return out
 
-class MYEDVR(nn.Module):
+class MYEDVR_FusionDenoise(nn.Module):
     def __init__(self, nf=64, nframes=5, groups=8, front_RBs=5, back_RBs=10, center=None,
-                 predeblur=False, HR_in=False, w_TSA=True, deconv=False):
-        super(MYEDVR, self).__init__()
+                 predeblur=False, HR_in=False, w_TSA=True, deconv=True):
+        super(MYEDVR_FusionDenoise, self).__init__()
         self.nf = nf
         self.center = nframes // 2 if center is None else center
         self.is_predeblur = True if predeblur else False
@@ -418,6 +418,7 @@ class MYEDVR(nn.Module):
             base = x_center
         else:
             if self.deconv:
+                #print('Using deconv!!!!!!!!!!!!')
                 base = self.deconv_up(denoise_out)
                 base = self.content_out(base)
             else:
@@ -567,7 +568,7 @@ class MYEDVR_RES(nn.Module):
 
 class MYEDVR_PreEnhance(nn.Module):
     def __init__(self, nf=64, nframes=5, groups=8, front_RBs=5, back_RBs=10, center=None,
-                 predeblur=False, HR_in=False, w_TSA=True, deconv=False):
+                 predeblur=False, HR_in=False, w_TSA=True, deconv=True):
         super(MYEDVR_PreEnhance, self).__init__()
         self.nf = nf
         self.center = nframes // 2 if center is None else center

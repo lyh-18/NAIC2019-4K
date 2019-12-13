@@ -45,8 +45,8 @@ def VideoSR(mode):
         lmdb_save_path = '/home/yhliu/AI4K/train1_HR.lmdb'
         H_dst, W_dst = 2160, 3840
     elif mode == 'LR':
-        img_folder = '/home/yhliu/AI4K/train1_LR_png/'
-        lmdb_save_path = '/home/yhliu/AI4K/train1_LR.lmdb'
+        img_folder = '/home/yhliu/AI4K/contest2/train2_LR_png/'
+        lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR.lmdb'
         H_dst, W_dst = 540, 960
     
     n_thread = 40 #40

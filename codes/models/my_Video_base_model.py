@@ -167,6 +167,7 @@ class VideoBaseModel(BaseModel):
 
     def load(self):
         load_path_G = self.opt['path']['pretrain_model_G']
+        print(load_path_G)
         if load_path_G is not None:
             logger.info('Loading model for G [{:s}] ...'.format(load_path_G))
             self.load_network(load_path_G, self.netG, self.opt['path']['strict_load'])
