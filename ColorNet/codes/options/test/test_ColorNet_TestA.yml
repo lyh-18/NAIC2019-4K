@@ -1,0 +1,276 @@
+name: Corrected_TestA_Contest2_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000
+suffix: ~  # add suffix to saved images
+model: generation
+distortion: sr
+scale: 4
+crop_border: 0  # crop border when evaluation. If None(~), crop the scale pixels
+gpu_ids: [0]
+
+datasets:
+  test_1:  # the 1st test dataset
+    name: '10852508'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/10852508
+  test_2:  # the 1st test dataset
+    name: '11314278'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/11314278 
+  test_3:  # the 1st test dataset
+    name: '11559568'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/11559568  
+  test_4:  # the 1st test dataset
+    name: '12868820'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/12868820
+  test_5:  # the 1st test dataset
+    name: '13142307'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/13142307
+  test_6:  # the 1st test dataset
+    name: '13926303'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/13926303
+  test_7:  # the 1st test dataset
+    name: '14034945'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/14034945
+  test_8:  # the 1st test dataset
+    name: '15025004'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/15025004
+  test_9:  # the 1st test dataset
+    name: '17320781'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/17320781
+  test_10:  # the 1st test dataset
+    name: '17958496'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/17958496
+  test_11:  # the 1st test dataset
+    name: '18007288'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/18007288
+  test_12:  # the 1st test dataset
+    name: '18746922'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/18746922 
+  test_13:  # the 1st test dataset
+    name: '18786149'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/18786149  
+  test_14:  # the 1st test dataset
+    name: '18864269'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/18864269
+  test_15:  # the 1st test dataset
+    name: '19013435'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/19013435
+  test_16:  # the 1st test dataset
+    name: '20374815'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/20374815
+  test_17:  # the 1st test dataset
+    name: '22281594'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/22281594
+  test_18:  # the 1st test dataset
+    name: '22766293'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/22766293
+  test_19:  # the 1st test dataset
+    name: '23117385'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/23117385
+  test_20:  # the 1st test dataset
+    name: '25400824'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/25400824
+  test_21:  # the 1st test dataset
+    name: '26919337'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/26919337
+  test_22:  # the 1st test dataset
+    name: '28025405'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/28025405 
+  test_23:  # the 1st test dataset
+    name: '28567641'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/28567641  
+  test_24:  # the 1st test dataset
+    name: '28639958'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/28639958
+  test_25:  # the 1st test dataset
+    name: '29069089'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/29069089
+  test_26:  # the 1st test dataset
+    name: '29145080'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/29145080
+  test_27:  # the 1st test dataset
+    name: '29265377'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/29265377
+  test_28:  # the 1st test dataset
+    name: '29631165'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/29631165
+  test_29:  # the 1st test dataset
+    name: '30129795'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/30129795
+  test_30:  # the 1st test dataset
+    name: '30498888'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/30498888
+  test_31:  # the 1st test dataset
+    name: '31566126'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/31566126
+  test_32:  # the 1st test dataset
+    name: '32084868'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/32084868 
+  test_33:  # the 1st test dataset
+    name: '32573156'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/32573156  
+  test_34:  # the 1st test dataset
+    name: '32642019'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/32642019
+  test_35:  # the 1st test dataset
+    name: '32790319'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/32790319
+  test_36:  # the 1st test dataset
+    name: '33426138'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/33426138
+  test_37:  # the 1st test dataset
+    name: '34104985'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/34104985
+  test_38:  # the 1st test dataset
+    name: '34374596'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/34374596
+  test_39:  # the 1st test dataset
+    name: '34426732'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/34426732
+  test_40:  # the 1st test dataset
+    name: '35587636'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/35587636
+  test_41:  # the 1st test dataset
+    name: '35613628'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/35613628
+  test_42:  # the 1st test dataset
+    name: '36016831'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/36016831 
+  test_43:  # the 1st test dataset
+    name: '37113101'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/37113101  
+  test_44:  # the 1st test dataset
+    name: '38091961'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/38091961
+  test_45:  # the 1st test dataset
+    name: '38961163'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/38961163
+  test_46:  # the 1st test dataset
+    name: '39122446'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/39122446
+  test_47:  # the 1st test dataset
+    name: '40842835'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/40842835
+  test_48:  # the 1st test dataset
+    name: '41134007'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/41134007
+  test_49:  # the 1st test dataset
+    name: '41664901'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/41664901
+  test_50:  # the 1st test dataset
+    name: '42303341'
+    mode: LR
+    dataroot_GT: ~
+    dataroot_LQ: /home/yhliu/AI4K/contest2/testA_LR_png/42303341
+
+
+
+
+
+#### network structures
+network_G:
+  which_model_G: ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW
+  in_nc: 3
+  out_nc: 3
+  nf: 64
+  nb: 16
+  upscale: 4
+
+#### path
+path:
+  pretrain_model_G: ../experiments/35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/220000_G.pth

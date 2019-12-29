@@ -296,7 +296,7 @@ class PreEnhance(nn.Module):
 
 class MYEDVR_FusionDenoise(nn.Module):
     def __init__(self, nf=64, nframes=5, groups=8, front_RBs=5, back_RBs=10, center=None,
-                 predeblur=False, HR_in=False, w_TSA=True, deconv=True):
+                 predeblur=False, HR_in=False, w_TSA=True, deconv=False):
         super(MYEDVR_FusionDenoise, self).__init__()
         self.nf = nf
         self.center = nframes // 2 if center is None else center

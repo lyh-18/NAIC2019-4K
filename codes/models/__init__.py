@@ -18,6 +18,8 @@ def create_model(opt):
         from .my_Video_base_model import VideoBaseModel as M
     elif model == 'my_video_base_res':
         from .my_Video_base_res_model import VideoBaseModel as M
+    elif model == 'color_video_base':
+        from .Color_Video_base_model import VideoBaseModel as M
     else:
         raise NotImplementedError('Model [{:s}] not recognized.'.format(model))
     m = M(opt)

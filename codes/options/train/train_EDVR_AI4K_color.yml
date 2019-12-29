@@ -1,0 +1,90 @@
+#### general settings
+name: XXX_Test_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A05yyy_Fusion_scratch_AI4K_128_lr_4e-4
+use_tb_logger: true
+model: color_video_base
+distortion: sr
+scale: 4
+gpu_ids: [0,1,2,3]
+
+#### datasets
+datasets:
+  train:
+    name: AI4K
+    mode: AI4K
+    interval_list: [1]
+    random_reverse: false
+    border_mode: false
+    data_type: lmdb
+    video_class: all     # all | movie | cartoon | lego
+    dataroot_GT: /home/yhliu/AI4K/contest1/train1_HR.lmdb
+    dataroot_LQ: /home/yhliu/AI4K/contest2/train2_LR_corrected1.lmdb
+    cache_keys: ~
+
+    N_frames: 5
+    use_shuffle: true
+    n_workers: 16 #3  # per GPU
+    batch_size: 8
+    GT_size: 512
+    LQ_size: 128
+    use_flip: false
+    use_rot: false
+    color: RGB
+  val:
+    name: REDS4
+    mode: video_test
+    dataroot_GT: /home/yhliu/AI4K/contest1/val1_HR_png_bic/
+    dataroot_LQ: /home/yhliu/AI4K/contest2/val2_LR_png_bic/
+    cache_data: True
+    N_frames: 5
+    padding: new_info
+
+#### network structures
+network_G:
+  which_model_G: MY_EDVR_FusionDenoise             #EDVR_PFRB
+  nf: 64
+  nframes: 5
+  groups: 8
+  front_RBs: 5
+  back_RBs: 10
+  predeblur: false
+  HR_in: false
+  w_TSA: true
+ 
+network_C:
+  which_model_C: ResNet_alpha_beta_decoder_3x3
+  
+
+#### path
+path:
+  #pretrain_model_G: ../experiments/pretrained_models/A01xxx/900000_G.pth
+  pretrain_model_C: /home/yhliu/BasicSR/experiments/XXX_Test_Contest2_001_ResNet_alpha_beta_gaussian_deconv_3x3/models/45000_G.pth
+  load_module: all     # all | pcd_align
+  strict_load: true
+  resume_state:  ~ #../experiments/A01xxx_EDVR_AI4K_5in_64f_10b_scratch_wTSA/training_state/45000.state
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_G: !!float 4e-4       # init 4e-4
+  lr_scheme: CosineAnnealingLR_Restart
+  beta1: 0.9
+  beta2: 0.99
+  niter: 1000000
+  ft_tsa_only: 50000
+  warmup_iter: -1  # -1: no warm up
+  T_period: [50000, 100000, 150000, 150000, 150000]
+  restarts: [50000, 150000, 300000, 450000]
+  restart_weights: [1, 1, 1, 1]
+  eta_min: !!float 1e-7
+  
+  color_warmup: 50000
+
+  pixel_criterion: cb
+  pixel_weight: 1.0
+  val_freq: !!float 5e3
+
+  manual_seed: 0
+
+#### logger
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 5000

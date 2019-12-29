@@ -1,0 +1,67 @@
+#### general settings
+name: Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k
+use_tb_logger: true
+model: generation
+distortion: sr
+scale: 4
+gpu_ids: [0,1,2,3]
+
+#### datasets
+datasets:
+  train:
+    name: DIV2K
+    mode: LQGT
+    dataroot_GT: /home/yhliu/AI4K/contest1/train1_HR.lmdb
+    dataroot_LQ: /home/yhliu/AI4K/contest2/train2_LR.lmdb
+
+    use_shuffle: true
+    n_workers: 16  # per GPU
+    batch_size: 8
+    use_flip: true
+    use_rot: false
+    color: RGB
+  val:
+    name: AI4K_contest2_val_new
+    mode: LQGT
+    dataroot_GT: /home/yhliu/AI4K/new_val_v2/new_HR
+    dataroot_LQ: /home/yhliu/AI4K/new_val_v2/new_LR
+
+#### network structures
+network_G:
+  which_model_G: ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW
+  in_nc: 3
+  out_nc: 3
+  nf: 64
+  nb: 16
+  upscale: 4
+
+
+#### path
+path:
+  pretrain_model_G: ~
+  strict_load: true
+  resume_state: ~  
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_G: !!float 1e-4    # 1e-4
+  lr_scheme: CosineAnnealingLR_Restart
+  beta1: 0.9
+  beta2: 0.99
+  niter: 1000000
+  warmup_iter: -1  # no warm up
+  T_period: [250000, 250000, 250000, 250000]
+  restarts: [100000]
+  restart_weights: [1]
+  eta_min: !!float 1e-7
+
+  pixel_criterion: l1
+  pixel_weight: 1.0
+
+  manual_seed: 10
+  val_freq: !!float 5e3
+
+#### logger
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 5e3

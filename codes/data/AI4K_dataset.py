@@ -80,6 +80,11 @@ class AI4KDataset(data.Dataset):
                     if item.split('_')[0] not in train_list:
                         self.paths_GT.remove(item)
                         
+            # clear bad data
+            for item in self.paths_GT.copy():
+                if item.split('_')[0] == '15922480':
+                    self.paths_GT.remove(item)
+                        
             logger.info('Using lmdb meta info for cache keys.')
         elif self.data_type == 'img':
             self.paths_GT, _ = util.get_image_paths(self.data_type, opt['dataroot_GT'])

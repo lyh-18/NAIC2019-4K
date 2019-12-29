@@ -35,14 +35,14 @@ class BaseModel():
         pass
 
     def _set_lr(self, lr_groups_l):
-        """Set learning rate for warmup
-        lr_groups_l: list for lr_groups. each for a optimizer"""
+        ''' set learning rate for warmup,
+        lr_groups_l: list for lr_groups. each for a optimizer'''
         for optimizer, lr_groups in zip(self.optimizers, lr_groups_l):
             for param_group, lr in zip(optimizer.param_groups, lr_groups):
                 param_group['lr'] = lr
 
     def _get_init_lr(self):
-        """Get the initial lr, which is set by the scheduler"""
+        # get the initial lr, which is set by the scheduler
         init_lr_groups_l = []
         for optimizer in self.optimizers:
             init_lr_groups_l.append([v['initial_lr'] for v in optimizer.param_groups])
@@ -51,7 +51,7 @@ class BaseModel():
     def update_learning_rate(self, cur_iter, warmup_iter=-1):
         for scheduler in self.schedulers:
             scheduler.step()
-        # set up warm-up learning rate
+        #### set up warm up learning rate
         if cur_iter < warmup_iter:
             # get initial lr for each group
             init_lr_g_l = self._get_init_lr()
@@ -63,13 +63,16 @@ class BaseModel():
             self._set_lr(warm_up_lr_l)
 
     def get_current_learning_rate(self):
-        return [param_group['lr'] for param_group in self.optimizers[0].param_groups]
+        # return self.schedulers[0].get_lr()[0]
+        return self.optimizers[0].param_groups[0]['lr']
 
     def get_network_description(self, network):
-        """Get the string and total parameters of the network"""
+        '''Get the string and total parameters of the network'''
         if isinstance(network, nn.DataParallel) or isinstance(network, DistributedDataParallel):
             network = network.module
-        return str(network), sum(map(lambda x: x.numel(), network.parameters()))
+        s = str(network)
+        n = sum(map(lambda x: x.numel(), network.parameters()))
+        return s, n
 
     def save_network(self, network, network_label, iter_label):
         save_filename = '{}_{}.pth'.format(iter_label, network_label)
@@ -81,46 +84,20 @@ class BaseModel():
             state_dict[key] = param.cpu()
         torch.save(state_dict, save_path)
 
-    def load_network(self, load_path, network, strict=True, load_module='all'):
+    def load_network(self, load_path, network, strict=True):
         if isinstance(network, nn.DataParallel) or isinstance(network, DistributedDataParallel):
             network = network.module
         load_net = torch.load(load_path)
-        
         load_net_clean = OrderedDict()  # remove unnecessary 'module.'
-        
-        print('Loading module parameters: ', load_module)
         for k, v in load_net.items():
-            if load_module == 'all':
-                #print(k)
-                if k.startswith('module.'):
-                    load_net_clean[k[7:]] = v
-                else:
-                    load_net_clean[k] = v
+            if k.startswith('module.'):
+                load_net_clean[k[7:]] = v
             else:
-                if k.split('.')[0] == load_module:
-                    print(k)
-                    if k.startswith('module.'):
-                        load_net_clean[k[7:]] = v
-                    else:
-                        load_net_clean[k] = v
-                else:
-                    continue
-                    
-        network.load_state_dict(load_net_clean, strict=strict)
-        
-    def load_network_color(self, load_path, network, strict=True):
-        if isinstance(network, nn.DataParallel) or isinstance(network, DistributedDataParallel):
-            network = network.module
-        load_net = torch.load(load_path)
-        load_net_clean = OrderedDict()  # add prefix 'color_net.'
-        for k, v in load_net.items():            
-            k = 'color_net.'+k
-            load_net_clean[k] = v
-            #print(k)
+                load_net_clean[k] = v
         network.load_state_dict(load_net_clean, strict=strict)
 
     def save_training_state(self, epoch, iter_step):
-        """Save training state during training, which will be used for resuming"""
+        '''Saves training state during training, which will be used for resuming'''
         state = {'epoch': epoch, 'iter': iter_step, 'schedulers': [], 'optimizers': []}
         for s in self.schedulers:
             state['schedulers'].append(s.state_dict())
@@ -131,7 +108,7 @@ class BaseModel():
         torch.save(state, save_path)
 
     def resume_training(self, resume_state):
-        """Resume the optimizers and schedulers for training"""
+        '''Resume the optimizers and schedulers for training'''
         resume_optimizers = resume_state['optimizers']
         resume_schedulers = resume_state['schedulers']
         assert len(resume_optimizers) == len(self.optimizers), 'Wrong lengths of optimizers'

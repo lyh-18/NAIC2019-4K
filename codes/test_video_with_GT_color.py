@@ -10,15 +10,12 @@ import numpy as np
 import cv2
 import torch
 import torch.nn as nn
+from collections import OrderedDict
 
 import utils.util as util
 import data.util as data_util
 import models.archs.EDVR_arch as EDVR_arch
-import models.archs.my_EDVR_arch as my_EDVR_arch
-
-
-import time
-
+import models.archs.SRResNet_arch as SRResNet_arch
 
 
 
@@ -28,9 +25,10 @@ def main():
     # configurations
     #################
     device = torch.device('cuda')
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-    test_set = 'AI4K_val'    # Vid4 | YouKu10 | REDS4 | AI4K_val | zhibo | AI4K_val_bic
-    test_name = 'XXX_Test_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A01xxx_900000_AI4K_128_lr_4e-5_160000'                 #     'AI4K_val_Denoise_A02_420000'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '8'
+    #os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4'
+    test_set = 'AI4K_val'    # Vid4 | YouKu10 | REDS4 | AI4K_val
+    test_name = 'XXX_Val_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A01xxx_900000_AI4K_128_lr_4e-5_100000' 
     data_mode = 'sharp_bicubic'    # sharp_bicubic | blur_bicubic
     N_in = 5
     
@@ -48,21 +46,21 @@ def main():
         test_dataset_folder = '../datasets/REDS4/{}'.format(data_mode)
         GT_dataset_folder = '../datasets/REDS4/GT'
     elif test_set == 'AI4K_val':
-        test_dataset_folder = '/home/yhliu/AI4K/contest1/val2_LR_png/'
+        test_dataset_folder = '/home/yhliu/AI4K/contest2/val2_LR_png/'
         GT_dataset_folder = '/home/yhliu/AI4K/contest1/val1_HR_png/'
-    elif test_set == 'AI4K_val_bic':
-        test_dataset_folder = '/home/yhliu/AI4K/contest1/val1_LR_png_bic/'
+    elif test_set == 'AI4K_bic':
+        test_dataset_folder = '/home/yhliu/AI4K/contest2/val2_LR_png_bic/'
         GT_dataset_folder = '/home/yhliu/AI4K/contest1/val1_HR_png_bic/'
-    elif test_set == 'zhibo':
-        test_dataset_folder = '/data1/yhliu/SR_ZHIBO_VIDEO/Test_video_LR/'
-        GT_dataset_folder = '/data1/yhliu/SR_ZHIBO_VIDEO/Test_video_HR/'
+    elif test_set == 'AI4K_testA':
+        test_dataset_folder =  '/data0/yhliu/AI4K/val2_LR_png'    #'/home/yhliu/AI4K/val2_LR_png/'  
+        GT_dataset_folder = '/data0/yhliu/AI4K/val1_HR_png/'
     
     flip_test = False
     
-    #model_path = '../experiments/pretrained_models/EDVR_Vimeo90K_SR_L.pth'
-    #model_path = '../experiments/A01b/models/250000_G.pth'
-    #model_path = '../experiments/A02_predenoise/models/415000_G.pth'
-    model_path = '../experiments/XXX_Test_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A01xxx_900000_AI4K_128_lr_4e-5/models/160000_G.pth'
+    #model_path = '../experiments/pretrained_models/A01xxx/900000_G.pth'
+    model_path = '../experiments/XXX_Test_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A01xxx_900000_AI4K_128_lr_4e-5/models/100000_G.pth'
+    
+    color_model_path = '/home/yhliu/BasicSR/experiments/XXX_Test_Contest2_001_ResNet_alpha_beta_gaussian_deconv_3x3/models/45000_G.pth'
 
 
 
@@ -74,9 +72,7 @@ def main():
         predeblur, HR_in = True, True
 
     model = EDVR_arch.EDVR(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
-    #model = my_EDVR_arch.MYEDVR(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
-    #model = my_EDVR_arch.MYEDVR_RES(64, N_in, 8, 5, back_RBs, predeblur=predeblur, HR_in=HR_in)
-    
+    color_model = SRResNet_arch.ResNet_alpha_beta_multi_in(structure='ResNet_alpha_beta_decoder_3x3')
 
 
 
@@ -88,11 +84,9 @@ def main():
         padding = 'new_info'
     else:
         padding = 'replicate'
-    save_imgs = True #True | False
+    save_imgs = True
 
     save_folder = '../results/{}'.format(test_name)
-    if test_set == 'zhibo':
-        save_folder = '/data1/yhliu/SR_ZHIBO_VIDEO/SR_png_sample_150'
     util.mkdirs(save_folder)
     util.setup_logger('base', save_folder, 'test', level=logging.INFO, screen=True, tofile=True)
     logger = logging.getLogger('base')
@@ -109,6 +103,18 @@ def main():
     model.eval()
     model = model.to(device)
     model=nn.DataParallel(model)
+    
+    #### set up the models
+    load_net = torch.load(color_model_path)
+    load_net_clean = OrderedDict()  # add prefix 'color_net.'
+    for k, v in load_net.items():            
+        k = 'color_net.'+k
+        load_net_clean[k] = v
+    
+    color_model.load_state_dict(load_net_clean, strict=True)
+    color_model.eval()
+    color_model = color_model.to(device)
+    color_model=nn.DataParallel(color_model)
 
 
     avg_psnr_l, avg_psnr_center_l, avg_psnr_border_l = [], [], []
@@ -116,8 +122,8 @@ def main():
 
     subfolder_l = sorted(glob.glob(osp.join(test_dataset_folder, '*')))
     subfolder_GT_l = sorted(glob.glob(osp.join(GT_dataset_folder, '*')))
-    print(subfolder_l)
-    print(subfolder_GT_l)
+    #print(subfolder_l)
+    #print(subfolder_GT_l)
     #exit()
     
     # for each subfolder
@@ -127,7 +133,7 @@ def main():
         save_subfolder = osp.join(save_folder, subfolder_name)
 
         img_path_l = sorted(glob.glob(osp.join(subfolder, '*')))
-        print(img_path_l)
+        #print(img_path_l)
         max_idx = len(img_path_l)
         if save_imgs:
             util.mkdirs(save_subfolder)
@@ -149,12 +155,11 @@ def main():
             print(imgs_in.size())
 
             if flip_test:
+                imgs_in = util.single_forward(color_model, imgs_in)
                 output = util.flipx4_forward(model, imgs_in)
             else:
-                start_time = time.time()
+                imgs_in = util.single_forward(color_model, imgs_in)
                 output = util.single_forward(model, imgs_in)
-                end_time = time.time()
-                print('Forward One image:', end_time-start_time)
             output = util.tensor2img(output.squeeze(0))
 
             if save_imgs:

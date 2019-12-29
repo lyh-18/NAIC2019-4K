@@ -45,8 +45,11 @@ def VideoSR(mode):
         lmdb_save_path = '/home/yhliu/AI4K/train1_HR.lmdb'
         H_dst, W_dst = 2160, 3840
     elif mode == 'LR':
-        img_folder = '/home/yhliu/AI4K/contest2/train2_LR_png/'
-        lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR.lmdb'
+        #img_folder = '/home/yhliu/AI4K/contest2/train2_LR_png/'
+        #lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR.lmdb'
+        img_folder = '/home/yhliu/BasicSR/results/XXX_Test_Contest2_001_ResNet_alpha_beta_gaussian_deconv_3x3_45000/train2_LR_corrected_ResNet_alpha_beta_gaussian_deconv_3x3_45000/'
+        lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR_corrected1.lmdb'
+        
         H_dst, W_dst = 540, 960
     
     n_thread = 40 #40

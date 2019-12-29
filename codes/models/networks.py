@@ -60,6 +60,19 @@ def define_D(opt):
         raise NotImplementedError('Discriminator model [{:s}] not recognized'.format(which_model))
     return netD
 
+# pre color correction
+def define_C(opt):
+    opt_net = opt['network_C']
+    which_model = opt_net['which_model_C']
+
+    if which_model == 'dfn':
+        netC = DynamicF.DFN_Color_correction()
+    elif 'ResNet' in which_model:
+        netC = SRResNet_arch.ResNet_alpha_beta_multi_in(which_model)
+    else:
+        raise NotImplementedError('Discriminator model [{:s}] not recognized'.format(which_model))
+    return netC
+
 
 # Define network used for perceptual loss
 def define_F(opt, use_bn=False):
