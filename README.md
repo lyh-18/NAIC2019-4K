@@ -14,6 +14,7 @@ Xpixel Group project with NAIC2019-4K
 ## 1 制作数据集
 (1) 抽取 HR 帧  
     sh extract_trainHR_frames_demo.sh  
+    Hello,大家好，我是果冻虾仁。
 (2) 抽取 LR 帧  
     sh extract_trainLR_frames_demo.sh  
 (3) 抽取测试集 LR 帧  
