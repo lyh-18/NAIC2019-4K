@@ -3,12 +3,12 @@ Xpixel Group project with NAIC2019-4K
 
 
 # Reproduce instructions
-## 1 制作数据集
+## 1. 制作数据集
 ```
     sh prepare_data.sh
 ```
 
-## 2 训练调色网络
+## 2. 训练调色网络
 (1) 进入 ColorNet/codes 文件夹
 ```
     cd ColorNet/codes
@@ -34,7 +34,7 @@ Xpixel Group project with NAIC2019-4K
     python create_lmdb_train2_LR_corrected_demo.py
 ```
 
-## 3 训练超分网络
+## 3. 训练超分网络
 (1) 进入主目录的 codes 文件夹
 ```
     cd codes
@@ -50,3 +50,13 @@ Xpixel Group project with NAIC2019-4K
     python -m torch.distributed.launch --nproc_per_node=4 --master_port=4321 train_demo.py -opt options/train/train_EDVR_AI4K_color_demo.yml --launcher pytorch
 ```
 
+## 4. 预测及合成视频
+(1) 使用训练好的模型对测试集进行预测，生成png图片 (50个视频大约需要3h)
+```
+    python test_video_no_GT_color_demo.py
+```
+(2) 合成视频 (仍在codes文件夹下)
+```
+    sh synthesize_mp4.sh
+```
+最终输出的视频保存在 /tmp/data/answer 文件夹中
