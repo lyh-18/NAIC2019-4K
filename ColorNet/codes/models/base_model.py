@@ -100,16 +100,24 @@ class BaseModel():
         if isinstance(network, nn.DataParallel) or isinstance(network, DistributedDataParallel):
             network = network.module
         
-        load_net_1 = torch.load(load_path_list[0])
-        load_net_2 = torch.load(load_path_list[1])
-        load_net_3 = torch.load(load_path_list[2])
+        load_net_0 = torch.load(load_path_list[0])
+        load_net_1 = torch.load(load_path_list[1])
+        load_net_2 = torch.load(load_path_list[2])
+        load_net_3 = torch.load(load_path_list[3])
         
         load_net_clean = OrderedDict()  # remove unnecessary 'module.'
-        for k, v in load_net_1.items():
+        
+        for k, v in load_net_0.items():
             if k.startswith('module.'):
                 load_net_clean[k[7:]] = v
             else:
                 load_net_clean[k] = v
+        
+        for k, v in load_net_1.items():
+            if k.startswith('module.'):
+                load_net_clean[k[7:]] += v
+            else:
+                load_net_clean[k] += v
         for k, v in load_net_2.items():
             if k.startswith('module.'):
                 load_net_clean[k[7:]] += v
@@ -122,7 +130,7 @@ class BaseModel():
                 load_net_clean[k] += v
         
         for k, v in load_net_clean.items():
-            load_net_clean[k] = load_net_clean[k]/3
+            load_net_clean[k] = load_net_clean[k]/4
         
         network.load_state_dict(load_net_clean, strict=strict)
 

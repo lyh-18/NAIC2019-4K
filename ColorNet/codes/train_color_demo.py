@@ -235,7 +235,7 @@ def main():
                     save_count += 1
                     if avg_psnr >= max_psnr:
                         max_psnr =  avg_psnr                    
-                        model.save(0)
+                        model.save('0')
                     else:
                         model.save(save_count)
                     model.save_training_state(epoch, current_step)

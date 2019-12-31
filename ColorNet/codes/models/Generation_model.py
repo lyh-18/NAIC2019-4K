@@ -179,10 +179,11 @@ class GenerationModel(BaseModel):
             self.load_network(load_path_G, self.netG, self.opt['path']['strict_load'])
     
     def load_model_average(self):
+        load_path_G_0 = self.opt['path']['pretrain_model_G_0']
         load_path_G_1 = self.opt['path']['pretrain_model_G_1']
         load_path_G_2 = self.opt['path']['pretrain_model_G_2']
         load_path_G_3 = self.opt['path']['pretrain_model_G_3']
-        load_path_G_list = [load_path_G_1, load_path_G_2, load_path_G_3]
+        load_path_G_list = [load_path_G_0, load_path_G_1, load_path_G_2, load_path_G_3]
         
         logger.info('Loading model for G1 [{:s}] ...'.format(load_path_G_1))
         logger.info('Loading model for G2 [{:s}] ...'.format(load_path_G_2))
