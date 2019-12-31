@@ -33,3 +33,20 @@ Xpixel Group project with NAIC2019-4K
 ```
     python create_lmdb_train2_LR_corrected_demo.py
 ```
+
+## 3 训练超分网络
+(1) 进入主目录的 codes 文件夹
+```
+    cd codes
+```
+
+(2) 使用初赛数据集预训练超分网络 (训练过程大约30h)
+```
+    python -m torch.distributed.launch --nproc_per_node=4 --master_port=4321 train_demo.py -opt options/train/train_EDVR_AI4K_demo.yml --launcher pytorch
+```
+
+(3) 使用颜色校准后的复赛数据集继续训练超分网络 (训练过程大约20h)
+```
+    python -m torch.distributed.launch --nproc_per_node=4 --master_port=4321 train_demo.py -opt options/train/train_EDVR_AI4K_color_demo.yml --launcher pytorch
+```
+
