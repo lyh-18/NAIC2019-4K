@@ -11,8 +11,8 @@ datasets:
   train:
     name: DIV2K
     mode: LQGT
-    dataroot_GT: /home/yhliu/AI4K/contest1/train1_HR.lmdb
-    dataroot_LQ: /home/yhliu/AI4K/contest2/train2_LR.lmdb
+    dataroot_GT: /tmp/data/train1_HR.lmdb
+    dataroot_LQ: /tmp/data/train2_LR.lmdb
 
     use_shuffle: true
     n_workers: 16  # per GPU
@@ -23,8 +23,8 @@ datasets:
   val:
     name: AI4K_contest2_val_new
     mode: LQGT
-    dataroot_GT: /home/yhliu/AI4K/new_val_v2/new_HR
-    dataroot_LQ: /home/yhliu/AI4K/new_val_v2/new_LR
+    dataroot_GT: /tmp/data/new_val_v2/new_HR
+    dataroot_LQ: /tmp/data/new_val_v2/new_LR
 
 #### network structures
 network_G:

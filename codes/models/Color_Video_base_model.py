@@ -89,6 +89,21 @@ class VideoBaseModel(BaseModel):
                                                 weight_decay=wd_G,
                                                 betas=(train_opt['beta1'], train_opt['beta2']))
             self.optimizers.append(self.optimizer_G)
+            
+            before_pcd = True
+            
+            if self.opt['train']['fix_before_PCD'] == True:
+                for k,v in self.netG.named_parameters():
+                    if before_pcd:
+                        v.requires_grad=False
+                    if 'pcd' in k:
+                        v.requires_grad=False
+                        before_pcd = False
+                        
+                    #print(k)
+                    #print(v.requires_grad)
+            
+            
 
             #### schedulers
             if train_opt['lr_scheme'] == 'MultiStepLR':

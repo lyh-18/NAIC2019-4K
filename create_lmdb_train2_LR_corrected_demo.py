@@ -41,14 +41,14 @@ def VideoSR(mode):
     # Set False for use limited memory
     BATCH = 2000 #5000  # After BATCH images, lmdb commits, if read_all_imgs = False
     if mode == 'GT':
-        img_folder = '/home/yhliu/AI4K/train1_HR_png/'
-        lmdb_save_path = '/home/yhliu/AI4K/train1_HR.lmdb'
+        img_folder = '/tmp/data/train1_HR_png'
+        lmdb_save_path = '/tmp/data/train1_HR.lmdb'
         H_dst, W_dst = 2160, 3840
     elif mode == 'LR':
-        #img_folder = '/home/yhliu/AI4K/contest2/train2_LR_png/'
-        #lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR.lmdb'
-        img_folder = '/home/yhliu/BasicSR/results/trainLR_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000/trainLR_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000/'
-        lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR_35_220000.lmdb'
+        img_folder = '/tmp/data/trainLR_Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/correted_train2_LR_png'
+        lmdb_save_path = '/tmp/data/train2_LR_corrected.lmdb'
+        #img_folder = '/home/yhliu/BasicSR/results/trainLR_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000/trainLR_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000/'
+        #lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR_35_220000.lmdb'
         
         H_dst, W_dst = 540, 960
     

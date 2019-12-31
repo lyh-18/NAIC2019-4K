@@ -28,17 +28,17 @@ def main():
     #torch.backends.cudnn.enabled = True
     
     device = torch.device('cuda')
-    os.environ['CUDA_VISIBLE_DEVICES'] = '5'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     
     test_set = 'AI4K_test'    # Vid4 | YouKu10 | REDS4 | AI4K_test
     data_mode = 'sharp_bicubic'    # sharp_bicubic | blur_bicubic
-    test_name = 'Contest2_Test16_A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd_85000'              #'AI4K_TEST_Denoise_A02_265000'    |  AI4K_test_A01b_145000
+    test_name = ''              #'AI4K_TEST_Denoise_A02_265000'    |  AI4K_test_A01b_145000
     N_in = 5
     
     # load test set
     if test_set == 'AI4K_test':
         #test_dataset_folder =  '/data1/yhliu/AI4K/Corrected_TestA_Contest2_001_ResNet_alpha_beta_gaussian_65000/'     #'/data1/yhliu/AI4K/testA_LR_png/'
-        test_dataset_folder = '/home/yhliu/AI4K/contest2/testA_LR_png/'
+        test_dataset_folder = '/tmp/data/testA_LR_png/'
     
     flip_test = False  #False
     
@@ -47,10 +47,10 @@ def main():
     #model_path = '../experiments/A02_predenoise/models/415000_G.pth'
     
     
-    model_path = '../experiments/A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/models/85000_G.pth'
+    model_path = '../experiments/Reproduce_color_EDVR_pretrain_fix_before_pcd/models/best_G.pth'
     
     
-    color_model_path = '/home/yhliu/BasicSR/experiments/35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/220000_G.pth'
+    color_model_path = '../ColorNet/experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/0_G.pth'
     
 
 
@@ -79,7 +79,7 @@ def main():
         padding = 'replicate'
     save_imgs = True
 
-    save_folder = '../results/{}'.format(test_name)
+    save_folder = '/tmp/data/answer'
     util.mkdirs(save_folder)
     util.setup_logger('base', save_folder, 'test', level=logging.INFO, screen=True, tofile=True)
     logger = logging.getLogger('base')

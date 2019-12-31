@@ -272,13 +272,119 @@ class ResNet_alpha_beta_decoder_3x3(nn.Module):
                 
         return out
 
+class ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW(nn.Module):
+    def __init__(self, in_nc=3, nf=64):
+        super(ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW, self).__init__()
+        
+        # encoder
+        self.conv_1 = nn.Conv2d(in_nc, nf, 3, 1, 1, bias=True)                 # 64f       
+        basic_block_64 = functools.partial(mutil.ResidualBlock_IN, nf=nf)        
+        self.encoder1 = mutil.make_layer(basic_block_64, 2)                    # 64f
+        
+        self.conv_2 = nn.Conv2d(nf, nf*2, 3, 1, 1, bias=True)                  # 128f
+        basic_block_128 = functools.partial(mutil.ResidualBlock_IN, nf=nf*2) 
+        self.encoder2 = mutil.make_layer(basic_block_128, 2)                   # 128f
+        
+        self.conv_3 = nn.Conv2d(nf*2, nf*4, 3, 1, 1, bias=True)                # 256f
+        basic_block_256 = functools.partial(mutil.ResidualBlock_IN, nf=nf*4) 
+        self.encoder3 = mutil.make_layer(basic_block_256, 2)                   # 256f
+        
+        self.conv_4 = nn.Conv2d(nf*4, nf, 3, 1, 1, bias=True)    # 64f
+        self.bn_4 = nn.InstanceNorm2d(nf, affine=True)
+        self.conv_5 = nn.Conv2d(nf, 64, 3, 1, 1, bias=True)       # 64f
+        
+        # pooling
+        self.avg_pool = nn.AvgPool2d(2)
+        
+
+        # activation function
+        self.lrelu = nn.LeakyReLU(negative_slope=0.1, inplace=True)
+        
+        
+        # decoder
+        self.conv_6 = nn.Conv2d(64, 32, 3, 1, padding=1, bias=True)
+        
+        self.conv_7 = nn.Conv2d(96, 32, 3, 1, padding=1, bias=True)
+        
+        self.conv_8 = nn.Conv2d(32, 32, 3, 1, padding=1, bias=True)
+       
+        self.conv_9 = nn.Conv2d(288, 32, 3, 1, padding=1, bias=True)
+        
+        self.conv_10 = nn.Conv2d(32, 32, 3, 1, padding=1, bias=True)
+       
+        self.conv_11 = nn.Conv2d(160, 32, 3, 1, padding=1, bias=True)
+       
+        self.conv_12 = nn.Conv2d(32, 32, 3, 1, padding=1, bias=True)
+        
+        self.conv_13 = nn.Conv2d(96, 32, 3, 1, padding=1, bias=True)
+      
+        self.conv_14 = nn.Conv2d(32, 6, 3, 1, padding=1, bias=True)
+
+        
+
+    def forward(self, x):
+        B, C, H, W = x.size()
+        x_in = x
+        #x_mean = torch.mean(x, dim=[2,3])   # [B, 3]
+        #x_std = torch.std(x, dim=[2,3])   # [B, 3]
+        #x_mean = x_mean.unsqueeze(2).unsqueeze(2)  # [B, 3, 1, 1]
+        #x_std = x_std.unsqueeze(2).unsqueeze(2)    # [B, 3, 1, 1]
+        
+        # encoder
+        fea = self.lrelu(self.conv_1(x))
+        fea_cat1 = self.encoder1(fea)      # [B, 64, H, W]
+        fea = self.avg_pool(fea_cat1)
+        fea = self.lrelu(self.conv_2(fea)) 
+        fea_cat2 = self.encoder2(fea)      # [B, 128, H/2, W/2]
+        fea = self.avg_pool(fea_cat2)
+        fea = self.lrelu(self.conv_3(fea))
+        fea_cat3 = self.encoder3(fea)      # [B, 256, H/4, W/4]
+        fea = self.avg_pool(fea_cat3)
+        fea_cat4 = self.bn_4(self.conv_4(fea))        # [B, 64, H/8, W/8]
+        fea = self.lrelu(fea_cat4)
+        fea = self.conv_5(fea)             # [B, 64, H/8, W/8]
+        
+        
+        
+        # decoder
+        de_fea = (self.conv_6(fea))                       # [B, 64, H/8, W/8]
+        de_fea_cat1 = torch.cat([fea_cat4, de_fea], 1)    # [B, 96, H/8, W/8]
+        de_fea = self.lrelu((self.conv_7(de_fea_cat1)))     # [B, 32, H/8, W/8]
+        de_fea = (self.conv_8(de_fea))                      # [B, 32, H/8, W/8]
+        de_fea = F.upsample(de_fea, size=(H//4, W//4), mode='bilinear')
+        de_fea_cat2 = torch.cat([fea_cat3, de_fea], 1)    # [B, 288, H/4, W/4]       
+        de_fea = self.lrelu((self.conv_9(de_fea_cat2)))     # [B, 32, H/4, W/4]    
+        de_fea = (self.conv_10(de_fea))                     # [B, 32, H/4, W/4]
+        de_fea = F.upsample(de_fea, size=(H//2, W//2), mode='bilinear')
+        de_fea_cat3 = torch.cat([fea_cat2, de_fea], 1)    # [B, 160, H/2, W/2]          
+        de_fea = self.lrelu((self.conv_11(de_fea_cat3)))    # [B, 32, H/2, W/2]
+        de_fea = (self.conv_12(de_fea))                     # [B, 32, H/2, W/2]
+        de_fea = F.upsample(de_fea, size=(H, W), mode='bilinear')
+        de_fea_cat4 = torch.cat([fea_cat1, de_fea], 1)    # [B, 96, H, W]
+        de_fea = self.lrelu((self.conv_13(de_fea_cat4)))    # [B, 32, H, W]
+        de_fea = self.conv_14(de_fea)                     # [B, 6, H, W]
+        #print('de_fea: ', de_fea.size())
+         
+        alpha = de_fea[:,0:3,:,:]
+        beta = de_fea[:,3:,:,:]
+        
+        #print('alpha: ', alpha.size(), 'beta: ', beta.size())
+        
+        out = alpha * x_in + beta
+                
+        return out
+
 
 class ResNet_alpha_beta_multi_in(nn.Module):
-    def __init__(self, in_nc=3, nf=64, structure='ResNet_alpha_beta_decoder_3x3'):
+    def __init__(self, in_nc=3, nf=64, structure='ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW'):
         super(ResNet_alpha_beta_multi_in, self).__init__()
         
-        if structure == 'ResNet_alpha_beta_decoder_3x3':
-            self.color_net = ResNet_alpha_beta_decoder_3x3()
+        #if structure == 'ResNet_alpha_beta_decoder_3x3':
+        #    self.color_net = ResNet_alpha_beta_decoder_3x3()
+        
+        if structure == 'ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW':
+            print('Loading color model: ',structure)
+            self.color_net = ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW()
         
         else:
             raise NotImplementedError('Color model [{:s}] not recognized'.format(structure))

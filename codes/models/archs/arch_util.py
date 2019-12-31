@@ -74,6 +74,27 @@ class ResidualBlock_noBN_3D(nn.Module):
         out = self.conv2(out)
         return identity + out
 
+class ResidualBlock_IN(nn.Module):
+    '''Residual block w/ IN
+    ---Conv-ReLU-Conv-+-
+     |________________|
+    '''
+
+    def __init__(self, nf=64):
+        super(ResidualBlock_IN, self).__init__()
+        self.conv1 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
+        self.bn1 = nn.InstanceNorm2d(nf, affine=True)
+        self.conv2 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
+        self.bn2 = nn.InstanceNorm2d(nf, affine=True)
+
+        # initialization
+        initialize_weights([self.conv1, self.conv2], 0.1)
+
+    def forward(self, x):
+        identity = x
+        out = F.relu(self.bn1(self.conv1(x)), inplace=True)
+        out = self.bn2(self.conv2(out))
+        return identity + out
 
 def flow_warp(x, flow, interp_mode='bilinear', padding_mode='zeros'):
     """Warp an image or feature map with optical flow

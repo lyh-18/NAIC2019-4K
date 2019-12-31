@@ -16,7 +16,7 @@ import utils.util as util  # noqa: E402
 
 def main():
     dataset = 'AI4K' # AI4K
-    mode = 'LR'  # GT | LR
+    mode = 'GT'  # GT | LR
 
     if dataset == 'AI4K':
         VideoSR(mode)
@@ -41,8 +41,8 @@ def VideoSR(mode):
     # Set False for use limited memory
     BATCH = 2000 #5000  # After BATCH images, lmdb commits, if read_all_imgs = False
     if mode == 'GT':
-        img_folder = '/home/yhliu/AI4K/train1_HR_png/'
-        lmdb_save_path = '/home/yhliu/AI4K/train1_HR.lmdb'
+        img_folder = '/tmp/data/train1_HR_png'
+        lmdb_save_path = '/tmp/data/train1_HR.lmdb'
         H_dst, W_dst = 2160, 3840
     elif mode == 'LR':
         #img_folder = '/home/yhliu/AI4K/contest2/train2_LR_png/'

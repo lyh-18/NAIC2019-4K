@@ -28,9 +28,9 @@ def main():
     # configurations
     #################
     device = torch.device('cuda')
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '6'
     test_set = 'AI4K_val'    # Vid4 | YouKu10 | REDS4 | AI4K_val | zhibo | AI4K_val_bic
-    test_name = 'XXX_Test_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A01xxx_900000_AI4K_128_lr_4e-5_160000'                 #     'AI4K_val_Denoise_A02_420000'
+    test_name = 'PCD_Vis_Test_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_A01xxx_900000_AI4K_5000'                 #     'AI4K_val_Denoise_A02_420000'
     data_mode = 'sharp_bicubic'    # sharp_bicubic | blur_bicubic
     N_in = 5
     
@@ -48,7 +48,7 @@ def main():
         test_dataset_folder = '../datasets/REDS4/{}'.format(data_mode)
         GT_dataset_folder = '../datasets/REDS4/GT'
     elif test_set == 'AI4K_val':
-        test_dataset_folder = '/home/yhliu/AI4K/contest1/val2_LR_png/'
+        test_dataset_folder = '/home/yhliu/AI4K/contest2/val2_LR_png/'
         GT_dataset_folder = '/home/yhliu/AI4K/contest1/val1_HR_png/'
     elif test_set == 'AI4K_val_bic':
         test_dataset_folder = '/home/yhliu/AI4K/contest1/val1_LR_png_bic/'
@@ -62,7 +62,7 @@ def main():
     #model_path = '../experiments/pretrained_models/EDVR_Vimeo90K_SR_L.pth'
     #model_path = '../experiments/A01b/models/250000_G.pth'
     #model_path = '../experiments/A02_predenoise/models/415000_G.pth'
-    model_path = '../experiments/XXX_Test_Contest2_ResNet_alpha_beta_decoder_3x3_45000_A01xxx_900000_AI4K_128_lr_4e-5/models/160000_G.pth'
+    model_path = '../experiments/A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/models/5000_G.pth'
 
 
 
