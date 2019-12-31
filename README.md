@@ -4,20 +4,32 @@ Xpixel Group project with NAIC2019-4K
 
 # Reproduce instructions
 ## 1 制作数据集
-(1) 抽取 HR 帧
 ```
-    sh extract_trainHR_frames_demo.sh
+    sh prepare_data.sh
 ```
-(2) 抽取 LR 帧
+
+## 2 训练调色网络
+(1) 进入 ColorNet/codes 文件夹
 ```
-    sh extract_trainLR_frames_demo.sh
+    cd ColorNet/codes
 ```
-(3) 抽取测试集 LR 帧
+
+(2) 执行训练命令 (训练过程大约10h)
 ```
-    sh extract_test_frames_demo.sh
- ```
-(4) 抽取训练过程验证集  
+    python train_color_demo.py -opt options/train/train_ColorNet_demo.yml
 ```
-    sh get_val10_demo.sh  
+
+(3) 使用训练好的调色模型对复赛 LR 进行调色
 ```
-(5) 
+    python test_color_vid_demo.py -opt options/test/test_ColorNet_Train2_demo.yml
+```
+
+(4) 制作新的复赛 LR 数据集
+回到项目主目录
+```
+    cd ../..
+```
+制作lmdb
+```
+    python create_lmdb_train2_LR_corrected_demo.py
+```
