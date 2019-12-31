@@ -24,12 +24,12 @@ Xpixel Group project with NAIC2019-4K
     python test_color_vid_demo.py -opt options/test/test_ColorNet_Train2_demo.yml
 ```
 
-(4) 制作新的复赛 LR 数据集
-回到项目主目录
+(4) 制作新的复赛 LR 数据集  
+  回到项目主目录
 ```
     cd ../..
 ```
-制作lmdb
+  制作lmdb
 ```
     python create_lmdb_train2_LR_corrected_demo.py
 ```
