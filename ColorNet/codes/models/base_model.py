@@ -95,6 +95,36 @@ class BaseModel():
             else:
                 load_net_clean[k] = v
         network.load_state_dict(load_net_clean, strict=strict)
+    
+    def load_network_average(self, load_path_list, network, strict=True):
+        if isinstance(network, nn.DataParallel) or isinstance(network, DistributedDataParallel):
+            network = network.module
+        
+        load_net_1 = torch.load(load_path_list[0])
+        load_net_2 = torch.load(load_path_list[1])
+        load_net_3 = torch.load(load_path_list[2])
+        
+        load_net_clean = OrderedDict()  # remove unnecessary 'module.'
+        for k, v in load_net_1.items():
+            if k.startswith('module.'):
+                load_net_clean[k[7:]] = v
+            else:
+                load_net_clean[k] = v
+        for k, v in load_net_2.items():
+            if k.startswith('module.'):
+                load_net_clean[k[7:]] += v
+            else:
+                load_net_clean[k] += v
+        for k, v in load_net_3.items():
+            if k.startswith('module.'):
+                load_net_clean[k[7:]] += v
+            else:
+                load_net_clean[k] += v
+        
+        for k, v in load_net_clean.items():
+            load_net_clean[k] = load_net_clean[k]/3
+        
+        network.load_state_dict(load_net_clean, strict=strict)
 
     def save_training_state(self, epoch, iter_step):
         '''Saves training state during training, which will be used for resuming'''

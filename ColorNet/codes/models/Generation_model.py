@@ -33,7 +33,10 @@ class GenerationModel(BaseModel):
             self.netG = DataParallel(self.netG)
         # print network
         self.print_network()
-        self.load()
+        if opt['path']['model_average']:
+            self.load_model_average()
+        else:
+            self.load()
 
         if self.is_train:
             self.netG.train()
@@ -174,6 +177,17 @@ class GenerationModel(BaseModel):
         if load_path_G is not None:
             logger.info('Loading model for G [{:s}] ...'.format(load_path_G))
             self.load_network(load_path_G, self.netG, self.opt['path']['strict_load'])
+    
+    def load_model_average(self):
+        load_path_G_1 = self.opt['path']['pretrain_model_G_1']
+        load_path_G_2 = self.opt['path']['pretrain_model_G_2']
+        load_path_G_3 = self.opt['path']['pretrain_model_G_3']
+        load_path_G_list = [load_path_G_1, load_path_G_2, load_path_G_3]
+        
+        logger.info('Loading model for G1 [{:s}] ...'.format(load_path_G_1))
+        logger.info('Loading model for G2 [{:s}] ...'.format(load_path_G_2))
+        logger.info('Loading model for G3 [{:s}] ...'.format(load_path_G_3))
+        self.load_network_average(load_path_G_list, self.netG, self.opt['path']['strict_load'])
 
     def save(self, iter_label):
         self.save_network(self.netG, 'G', iter_label)
