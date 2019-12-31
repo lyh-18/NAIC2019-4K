@@ -1,6 +1,6 @@
 #!/bin/bash
 
-folder="../results/Reproduce_color_EDVR_pretrain_fix_before_pcd"
+folder="/tmp/data/answer_png"
 files=$(ls $folder)
 save_folder="/tmp/data/answer"
 

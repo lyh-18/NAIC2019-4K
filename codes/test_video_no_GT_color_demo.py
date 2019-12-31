@@ -79,7 +79,7 @@ def main():
         padding = 'replicate'
     save_imgs = True
 
-    save_folder = '/tmp/data/answer'
+    save_folder = '/tmp/data/answer_png'
     util.mkdirs(save_folder)
     util.setup_logger('base', save_folder, 'test', level=logging.INFO, screen=True, tofile=True)
     logger = logging.getLogger('base')
