@@ -1,7 +1,6 @@
 import os
 import cv2
 import glob
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 

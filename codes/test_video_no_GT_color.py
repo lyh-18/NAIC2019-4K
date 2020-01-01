@@ -32,7 +32,7 @@ def main():
     
     test_set = 'AI4K_test'    # Vid4 | YouKu10 | REDS4 | AI4K_test
     data_mode = 'sharp_bicubic'    # sharp_bicubic | blur_bicubic
-    test_name = 'Contest2_Test16_A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd_85000'              #'AI4K_TEST_Denoise_A02_265000'    |  AI4K_test_A01b_145000
+    test_name = 'Contest2_Test18_A38_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd_165000'              #'AI4K_TEST_Denoise_A02_265000'    |  AI4K_test_A01b_145000
     N_in = 5
     
     # load test set
@@ -47,7 +47,7 @@ def main():
     #model_path = '../experiments/A02_predenoise/models/415000_G.pth'
     
     
-    model_path = '../experiments/A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/models/85000_G.pth'
+    model_path = '../experiments/A38_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/models/165000_G.pth'
     
     
     color_model_path = '/home/yhliu/BasicSR/experiments/35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/220000_G.pth'

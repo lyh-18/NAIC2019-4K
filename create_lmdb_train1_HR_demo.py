@@ -10,8 +10,8 @@ import lmdb
 import cv2
 
 sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
-import data.util as data_util  # noqa: E402
-import utils.util as util  # noqa: E402
+import codes.data.util as data_util  # noqa: E402
+import codes.utils.util as util  # noqa: E402
 
 
 def main():
