@@ -186,7 +186,7 @@ def main():
                 start_time = time.time()
 
             # validation
-            if current_step % opt['train']['val_freq'] == 0 and rank <= 0:
+            if current_step % opt['train']['val_freq'] == 0 and rank <= 0 and current_step >= opt['train']['val_min_iter']:
                 avg_psnr = 0.0
                 idx = 0
                 for val_data in val_loader:
@@ -229,7 +229,7 @@ def main():
                     tb_logger.add_scalar('psnr', avg_psnr, current_step)
 
             #### save models and training states
-            if current_step % opt['logger']['save_checkpoint_freq'] == 0:
+            if current_step % opt['logger']['save_checkpoint_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
                 if avg_psnr >= 29.1:
                     if rank <= 0:
                         logger.info('Saving models and training states.')

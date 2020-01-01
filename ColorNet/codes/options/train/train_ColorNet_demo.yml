@@ -61,6 +61,7 @@ train:
 
   manual_seed: 10
   val_freq: !!float 3e3
+  val_min_iter: 50000
 
 #### logger
 logger:
