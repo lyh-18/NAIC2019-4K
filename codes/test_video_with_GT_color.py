@@ -28,7 +28,7 @@ def main():
     os.environ['CUDA_VISIBLE_DEVICES'] = '5'
     #os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4'
     test_set = 'AI4K_val'    # Vid4 | YouKu10 | REDS4 | AI4K_val
-    test_name = 'A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd_85000' 
+    test_name = 'A38_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd_165000' 
     data_mode = 'sharp_bicubic'    # sharp_bicubic | blur_bicubic
     N_in = 5
     
@@ -58,7 +58,7 @@ def main():
     flip_test = False
     
     #model_path = '../experiments/pretrained_models/A01xxx/900000_G.pth'
-    model_path = '../experiments/A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/models/85000_G.pth'
+    model_path = '../experiments/A38_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/models/165000_G.pth'
     
     color_model_path = '/home/yhliu/BasicSR/experiments/35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/220000_G.pth'
 

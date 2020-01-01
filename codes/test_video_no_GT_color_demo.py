@@ -50,7 +50,7 @@ def main():
     model_path = '../experiments/Reproduce_color_EDVR_pretrain_fix_before_pcd/models/best_G.pth'
     
     
-    color_model_path = '../ColorNet/experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/0_G.pth'
+    color_model_path = '../ColorNet/experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/best_G.pth'
     
 
 

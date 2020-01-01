@@ -57,7 +57,7 @@ network_C:
 #### path
 path:
   pretrain_model_G: ../experiments/Reproduce_EDVR_A01/models/best_G.pth
-  pretrain_model_C: ../ColorNet/experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/0_G.pth
+  pretrain_model_C: ../ColorNet/experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/best_G.pth
   load_module: all     # all | pcd_align
   strict_load: true
   resume_state:  ~
