@@ -17,6 +17,7 @@ datasets:
     use_shuffle: true
     n_workers: 16  # per GPU
     batch_size: 8
+    GT_size: 1024
     use_flip: true
     use_rot: false
     color: RGB
@@ -48,7 +49,7 @@ train:
   lr_scheme: CosineAnnealingLR_Restart
   beta1: 0.9
   beta2: 0.99
-  niter: 1000000
+  niter: 300000
   warmup_iter: -1  # no warm up
   T_period: [250000, 250000, 250000, 250000]
   restarts: [100000]
@@ -59,9 +60,9 @@ train:
   pixel_weight: 1.0
 
   manual_seed: 10
-  val_freq: !!float 5e3
+  val_freq: !!float 3e3
 
 #### logger
 logger:
   print_freq: 100
-  save_checkpoint_freq: !!float 5e3
+  save_checkpoint_freq: !!float 3e3
