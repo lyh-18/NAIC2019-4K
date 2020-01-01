@@ -26,9 +26,9 @@ network_G:
 
 #### path
 path:
-  pretrain_model_G: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/0_G.pth
+  pretrain_model_G: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/best_G.pth
   results_root: /tmp/data/
-  model_average: 'yes'
+  model_average: ~
   pretrain_model_G_1: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/1_G.pth
   pretrain_model_G_2: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/2_G.pth
   pretrain_model_G_3: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/3_G.pth
