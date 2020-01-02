@@ -313,13 +313,13 @@ def main():
                 
             #### save models and training states
             
-            if current_step % opt['logger']['save_checkpoint_freq'] == 0  and psnr_total_avg >= 34:
+            if current_step % opt['logger']['save_checkpoint_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
                 if rank <= 0:
                     if psnr_total_avg >= max_psnr:
                         max_psnr = psnr_total_avg
                         logger.info('Saving models and training states.')
                         model.save('best')
-                        model.save_training_state(epoch, current_step)
+                    model.save_training_state(epoch, current_step)
                    
 
     if rank <= 0:

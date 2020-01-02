@@ -50,9 +50,9 @@ network_G:
 
 #### path
 path:
-  #pretrain_model_G: ../experiments/A01a_EDVR_AI4K_5in_64f_10b_noTSA_scratch/models/310000_G.pth
+  pretrain_model_G: ~
   strict_load: false
-  resume_state:  ~ #../experiments/A01xxx_EDVR_AI4K_5in_64f_10b_scratch_wTSA/training_state/45000.state
+  resume_state:  ~ 
 
 #### training settings: learning rate scheme, loss
 train:
@@ -70,11 +70,13 @@ train:
 
   pixel_criterion: cb
   pixel_weight: 1.0
-  val_freq: !!float 3e3
+  
+  val_min_iter: 200000
+  val_freq: !!float 5e3
 
   manual_seed: 0
 
 #### logger
 logger:
   print_freq: 100
-  save_checkpoint_freq: !!float 3000
+  save_checkpoint_freq: !!float 5000

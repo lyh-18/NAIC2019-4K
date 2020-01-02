@@ -81,6 +81,8 @@ train:
 
   pixel_criterion: cb
   pixel_weight: 1.0
+  
+  val_min_iter: 50000
   val_freq: !!float 5e3
 
   manual_seed: 0
