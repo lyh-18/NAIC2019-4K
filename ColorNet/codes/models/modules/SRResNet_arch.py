@@ -1111,13 +1111,13 @@ class ResNet_decoder_3x3(nn.Module):
 
 
 class ResNet_plain(nn.Module):
-    def __init__(self, in_nc=3, nf=64, nb=8):
+    def __init__(self, in_nc=3, nf=64, nb=3):
         super(ResNet_plain, self).__init__()
         # directly output the corrected image
         
         
         self.conv_1 = nn.Conv2d(in_nc, nf, 3, 1, 1, bias=True)                 # 64f       
-        basic_block_64 = functools.partial(mutil.ResidualBlock_noBN, nf=nf)        
+        basic_block_64 = functools.partial(mutil.ResidualBlock_IN, nf=nf)        
         self.res_blocks = mutil.make_layer(basic_block_64, nb)                    # 64f
         
         self.conv_2 = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)

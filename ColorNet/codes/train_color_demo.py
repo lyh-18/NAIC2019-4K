@@ -230,16 +230,15 @@ def main():
 
             #### save models and training states
             if current_step % opt['logger']['save_checkpoint_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
-                if avg_psnr >= 29.1:
-                    if rank <= 0:
-                        logger.info('Saving models and training states.')
-                        save_count += 1
-                        if avg_psnr >= max_psnr:
-                            max_psnr =  avg_psnr                    
-                            model.save('best')
-                        else:
-                            model.save(save_count)
-                        model.save_training_state(epoch, current_step)
+                if rank <= 0:
+                    logger.info('Saving models and training states.')
+                    save_count += 1
+                    if avg_psnr >= max_psnr:
+                        max_psnr =  avg_psnr                    
+                        model.save('best')
+                    else:
+                        model.save(save_count)
+                    model.save_training_state(epoch, current_step)
             
             
 
