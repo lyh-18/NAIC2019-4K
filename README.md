@@ -47,7 +47,7 @@ Xpixel Group project with NAIC2019-4K
 
 (1) 进入主目录的 codes 文件夹
 ```
-    cd codes
+    cd NAIC2019-4K/codes
 ```
 
 (2) 使用初赛数据集预训练超分网络 (训练过程大约30h)
