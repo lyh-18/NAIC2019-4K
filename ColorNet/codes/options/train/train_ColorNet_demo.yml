@@ -60,10 +60,10 @@ train:
   pixel_weight: 1.0
 
   manual_seed: 10
-  val_freq: !!float 3e3
-  val_min_iter: 50000
+  val_freq: !!float 2500
+  val_min_iter: 80000
 
 #### logger
 logger:
   print_freq: 100
-  save_checkpoint_freq: !!float 3e3
+  save_checkpoint_freq: !!float 2500
