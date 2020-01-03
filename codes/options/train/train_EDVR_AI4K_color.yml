@@ -1,5 +1,5 @@
 #### general settings
-name: A38_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd
+name: Reproduce_color_EDVR_pretrain_fix_before_pcd
 use_tb_logger: true
 model: color_video_base
 distortion: sr
@@ -56,8 +56,8 @@ network_C:
 
 #### path
 path:
-  pretrain_model_G: ../experiments/pretrained_models/A01xxx/900000_G.pth
-  pretrain_model_C: /home/yhliu/BasicSR/experiments/35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/220000_G.pth
+  pretrain_model_G: ../experiments/Reproduce_EDVR_A01/models/best_G.pth
+  pretrain_model_C: ../ColorNet/experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/best_G.pth
   load_module: all     # all | pcd_align
   strict_load: true
   resume_state:  # ~../experiments/A37_color_EDVR_35_220000_A01_5in_64f_10b_128_pretrain_A01xxx_900000_fix_before_pcd/training_state/55000.state

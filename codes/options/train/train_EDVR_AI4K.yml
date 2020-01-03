@@ -1,5 +1,5 @@
 #### general settings
-name: Contest2_A01_EDVR_AI4K_5in_64f_10b_scratch_wTSA_noRes
+name: Reproduce_EDVR_A01
 use_tb_logger: true
 model: video_base
 distortion: sr

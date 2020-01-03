@@ -2,7 +2,6 @@
 
 sh extract_trainHR_frames_demo.sh
 sh extract_trainLR_frames_demo.sh
-sh extract_test_frames_demo.sh
 
 sh get_val10_demo.sh
 python get_video_bic_demo.py
