@@ -18,4 +18,7 @@ RUN apt-get update \
     && add-apt-repository ppa:savoury1/multimedia \
     && apt-get update \
     && apt-get install ffmpeg
+
+RUN sh run_train.sh
     
+

@@ -20,12 +20,21 @@ import models.archs.SRResNet_arch as SRResNet_arch
 
 import time
 
+import argparse
+
+
+
+
 def main():
     #################
     # configurations
     #################
     #torch.backends.cudnn.benchmark = True
     #torch.backends.cudnn.enabled = True
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input_folder', dest='input_folder', type=str, default='/tmp/data/testA_LR_png/', help='')
+    parser.add_argument('--save_folder', dest='save_folder', type=str, default='/tmp/data/answer_png', help='')
+    args = parser.parse_args()
     
     device = torch.device('cuda')
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -38,7 +47,7 @@ def main():
     # load test set
     if test_set == 'AI4K_test':
         #test_dataset_folder =  '/data1/yhliu/AI4K/Corrected_TestA_Contest2_001_ResNet_alpha_beta_gaussian_65000/'     #'/data1/yhliu/AI4K/testA_LR_png/'
-        test_dataset_folder = '/tmp/data/testA_LR_png/'
+        test_dataset_folder = args.input_folder   #'/tmp/data/testA_LR_png/'
     
     flip_test = False  #False
     
@@ -79,7 +88,10 @@ def main():
         padding = 'replicate'
     save_imgs = True
 
-    save_folder = '/tmp/data/answer_png'
+    save_folder = args.save_folder    #'/tmp/data/answer_png'
+    print(test_dataset_folder, save_folder)
+    exit()
+    
     util.mkdirs(save_folder)
     util.setup_logger('base', save_folder, 'test', level=logging.INFO, screen=True, tofile=True)
     logger = logging.getLogger('base')
