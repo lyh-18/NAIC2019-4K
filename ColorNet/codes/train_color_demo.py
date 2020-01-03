@@ -229,7 +229,7 @@ def main():
                     tb_logger.add_scalar('psnr', avg_psnr, current_step)
 
             #### save models and training states
-            if current_step % opt['logger']['save_checkpoint_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
+            if current_step % opt['logger']['save_checkpoint_freq'] == 0:
                 if rank <= 0:
                     logger.info('Saving models and training states.')
                     save_count += 1
