@@ -14,11 +14,11 @@ Xpixel Group project with NAIC2019-4K
 ```
 3、构建训练容器
 ```
-    docker build -t AI4K:train -f Dockerfile_train .
+    docker build -t ai4k:train -f Dockerfile_train .
 ```
 4、运行训练容器
 ```
-    docker run AI4K:train
+    docker run -v <data_path>:/tmp/data ai4k:train
 ```
 
 5、构建推理容器  
