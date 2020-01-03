@@ -3,6 +3,66 @@ Xpixel Group project with NAIC2019-4K
 
 
 # Reproduce instructions
+## 使用docker构建训练/推理容器
+1、拉取项目
+```
+    git clone https://github.com/lyh-18/NAIC2019-4K
+```
+2、进入项目主目录
+```
+    cd NAIC2019-4K
+```
+3、构建训练容器
+```
+    docker build -t AI4K:train -f Dockerfile_train .
+```
+4、运行训练容器
+```
+    docker run AI4K:train
+```
+
+5、构建推理容器  
+(1) 指定输入的测试集目录及输出的切帧保存目录
+编辑 extract_test_frames_demo.sh 文件
+```
+#!/bin/bash
+
+folder="/tmp/data/test"   # please specify input .mp4 data folder
+files=$(ls $folder)
+save_folder="/tmp/data/testA_LR_png"  # please specify output .png data folder
+
+for filename in $files
+do 
+ mkdir -p $save_folder/${filename%.*}
+ ffmpeg -i $folder/$filename -r 30 $save_folder/${filename%.*}/%3d.png -y 
+done
+```
+更改 folder 为输入的测试集mp4视频目录，save_folder 为输出的存放切帧后的png图片的目录。  
+  
+(2) 指定输入的测试集切帧图片目录及输出的合成视频目录
+编辑 run_test.sh 文件  
+```
+#!/bin/bash
+
+INPUT_DIR="/tmp/data/testA_LR_png/"
+OUTPUT_FILE="/tmp/data/answer"
+
+python test_video_no_GT_color_demo.py \
+  --input_folder="${INPUT_DIR}" \
+  --save_folder="${OUTPUT_FILE}" \
+```
+更改 INPUT_DIR 为输入的测试集切帧图片png目录，OUTPUT_FILE 为输出的存放mp4的目录。
+
+(3) 构建推理容器
+```
+    docker build -t AI4K:test -f Dockerfile_test .
+```
+(4) 运行推理容器
+```
+    docker run AI4K:test
+```
+
+## 详细解读
 ## 1. 制作数据集
 ```
     sh prepare_data.sh
