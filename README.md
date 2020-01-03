@@ -7,6 +7,13 @@ Xpixel Group project with NAIC2019-4K
 ```
     sh prepare_data.sh
 ```
+这一步请确保已经安装以下库：
+ffmpeg 4.2  
+opencv-python  
+matplotlib  
+lmdb  
+tqdm  
+否则会报错。如果报错，可以定位到相应位置查看原因。具体每一个脚本可以 cat prepare_data.sh 查看后单独执行。
 
 ## 2. 训练调色网络
 (1) 进入 ColorNet/codes 文件夹
