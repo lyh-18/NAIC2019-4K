@@ -35,11 +35,11 @@ output_mp4_folder="/tmp/data/answer"
 
 (3) 构建推理容器
 ```
-    docker build -t AI4K:test -f Dockerfile_test .
+    docker build -t ai4k:test -f Dockerfile_test .
 ```
 (4) 运行推理容器
 ```
-    docker run AI4K:test
+    docker run ai4k:test
 ```
 
 ## 详细解读
