@@ -320,6 +320,10 @@ def main():
                         logger.info('Saving models and training states.')
                         model.save('best')
                     model.save_training_state(epoch, current_step)
+                    
+            if current_step % opt['logger']['save_checkpoint_freq'] == 0:
+                if rank <= 0:
+                    model.save_training_state(epoch, current_step)
                    
 
     if rank <= 0:
