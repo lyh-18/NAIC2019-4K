@@ -38,7 +38,7 @@ Xpixel Group project with NAIC2019-4K
 (0) 编译dcn模块  
 进入 NAIC2019-4K/codes/models/archs/dcn/ 文件夹
 ```
-    cd NAIC2019-4K/codes/models/archs/dcn/
+    cd $HOME/NAIC2019-4K/codes/models/archs/dcn/
 ```
 编译
 ```
