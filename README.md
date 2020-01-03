@@ -35,7 +35,7 @@ Xpixel Group project with NAIC2019-4K
 ```
 
 ## 3. 训练超分网络
-(0) 编译dcn模块
+(0) 编译dcn模块  
 进入 NAIC2019-4K/codes/models/archs/dcn/ 文件夹
 ```
     cd NAIC2019-4K/codes/models/archs/dcn/
