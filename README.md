@@ -29,7 +29,7 @@ Xpixel Group project with NAIC2019-4K
 ```
     cd ../..
 ```
-  制作lmdb
+  制作lmdb (这一步会花费一些时间，执行该命令的同时，可以进行后面的训练超分网络步骤)
 ```
     python create_lmdb_train2_LR_corrected_demo.py
 ```
