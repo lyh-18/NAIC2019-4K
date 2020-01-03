@@ -14,7 +14,7 @@ Xpixel Group project with NAIC2019-4K
     cd ColorNet/codes
 ```
 
-(2) 执行训练命令 (训练过程大约10h)
+(2) 执行训练命令 (训练过程大约30h)
 ```
     python train_color_demo.py -opt options/train/train_ColorNet_demo.yml
 ```
