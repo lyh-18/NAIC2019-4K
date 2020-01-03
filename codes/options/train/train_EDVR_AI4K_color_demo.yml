@@ -69,7 +69,7 @@ train:
   lr_scheme: CosineAnnealingLR_Restart
   beta1: 0.9
   beta2: 0.99
-  niter: 400000
+  niter: 350000
   ft_tsa_only: 50000
   warmup_iter: -1  # -1: no warm up
   T_period: [50000, 100000, 150000, 150000, 150000]
