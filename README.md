@@ -7,7 +7,7 @@ Xpixel Group project with NAIC2019-4K
 ```
     sh prepare_data.sh
 ```
-这一步请确保已经安装以下库：
+这一步请确保已经安装以下库：  
 ffmpeg 4.2  
 opencv-python  
 matplotlib  
