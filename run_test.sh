@@ -26,7 +26,7 @@ done
 # predict HR frames
 INPUT_DIR=$save_png_folder
 
-
+cd codes
 python test_video_no_GT_color_demo.py \
   --input_folder="${save_png_folder}" \
   --save_folder="${output_png_folder}" \
