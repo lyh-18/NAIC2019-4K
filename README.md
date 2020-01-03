@@ -23,35 +23,15 @@ Xpixel Group project with NAIC2019-4K
 
 5、构建推理容器  
 (1) 指定输入的测试集目录及输出的切帧保存目录
-编辑 extract_test_frames_demo.sh 文件
+编辑 run_test.sh 文件
 ```
-#!/bin/bash
-
-folder="/tmp/data/test"   # please specify input .mp4 data folder
-files=$(ls $folder)
-save_folder="/tmp/data/testA_LR_png"  # please specify output .png data folder
-
-for filename in $files
-do 
- mkdir -p $save_folder/${filename%.*}
- ffmpeg -i $folder/$filename -r 30 $save_folder/${filename%.*}/%3d.png -y 
-done
+# specify folders
+input_mp4_folder="/tmp/data/test"      
+save_png_folder="/tmp/data/testA_LR_png"
+output_png_folder="/tmp/data/answer_png"
+output_mp4_folder="/tmp/data/answer"
 ```
-更改 folder 为输入的测试集mp4视频目录，save_folder 为输出的存放切帧后的png图片的目录。  
-  
-(2) 指定输入的测试集切帧图片目录及输出的合成视频目录
-编辑 run_test.sh 文件  
-```
-#!/bin/bash
-
-INPUT_DIR="/tmp/data/testA_LR_png/"
-OUTPUT_FILE="/tmp/data/answer"
-
-python test_video_no_GT_color_demo.py \
-  --input_folder="${INPUT_DIR}" \
-  --save_folder="${OUTPUT_FILE}" \
-```
-更改 INPUT_DIR 为输入的测试集切帧图片png目录，OUTPUT_FILE 为输出的存放mp4的目录。
+更改 input_mp4_folder 为输入的测试集mp4视频目录，save_png_folder 为输出的存放切帧后的 LR png图片的目录, output_png_folder 为预测的HR png图片的目录，output_mp4_folder 为最终合成的mp4文件的目录。
 
 (3) 构建推理容器
 ```
