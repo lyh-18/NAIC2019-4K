@@ -14,7 +14,7 @@ RUN apt-get update \
             tqdm \
             pillow==6.2.1 \
     && pip3 install torchvision==0.4.0 -f https://download.pytorch.org/whl/torch_stable.html \
-    && pip3 uninstall torch \
+    && pip3 uninstall -y torch \
     && pip3 install https://download.pytorch.org/whl/cu100/torch-1.2.0-cp36-cp36m-manylinux1_x86_64.whl \
     && add-apt-repository ppa:savoury1/ffmpeg4 \
     && add-apt-repository ppa:savoury1/graphics \
