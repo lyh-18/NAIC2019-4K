@@ -90,7 +90,7 @@ def main():
 
     save_folder = args.save_folder    #'/tmp/data/answer_png'
     print(test_dataset_folder, save_folder)
-    exit()
+    
     
     util.mkdirs(save_folder)
     util.setup_logger('base', save_folder, 'test', level=logging.INFO, screen=True, tofile=True)
