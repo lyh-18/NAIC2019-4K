@@ -186,7 +186,7 @@ def main():
                 start_time = time.time()
 
             # validation
-            if current_step % opt['train']['val_freq'] == 0 and rank <= 0:
+            if current_step % opt['train']['val_freq'] == 0 and rank <= 0 and current_step >= opt['train']['val_min_iter']:
                 avg_psnr = 0.0
                 idx = 0
                 for val_data in val_loader:
@@ -231,6 +231,10 @@ def main():
             #### save models and training states
             if current_step % opt['logger']['save_checkpoint_freq'] == 0:
                 if rank <= 0:
+                    model.save_training_state(epoch, current_step)
+            
+            if current_step % opt['logger']['save_checkpoint_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
+                if rank <= 0:
                     logger.info('Saving models and training states.')
                     save_count += 1
                     if avg_psnr >= max_psnr:
@@ -240,9 +244,7 @@ def main():
                         model.save(current_step)
                     model.save_training_state(epoch, current_step)
             
-            if current_step % opt['logger']['save_checkpoint_freq'] == 0:
-                if rank <= 0:
-                    model.save_training_state(epoch, current_step)
+            
             
             
 

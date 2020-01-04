@@ -189,7 +189,7 @@ def main():
             #print('11111111111')
             #print(opt['datasets'].get('val', None))
             #print('22222222222')
-            if opt['datasets'].get('val', None) and current_step % opt['train']['val_freq'] == 0:
+            if opt['datasets'].get('val', None) and current_step % opt['train']['val_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
                 
                 
                 print('validating...........')
@@ -312,8 +312,11 @@ def main():
                                 tb_logger.add_scalar(k, v, current_step)
                 
             #### save models and training states
-            
             if current_step % opt['logger']['save_checkpoint_freq'] == 0:
+                if rank <= 0:
+                    model.save_training_state(epoch, current_step)
+            
+            if current_step % opt['logger']['save_checkpoint_freq'] == 0 and current_step >= opt['train']['val_min_iter']:
                 if rank <= 0:
                     if psnr_total_avg >= max_psnr:
                         max_psnr = psnr_total_avg
@@ -321,9 +324,7 @@ def main():
                         model.save('best')
                     model.save_training_state(epoch, current_step)
                     
-            if current_step % opt['logger']['save_checkpoint_freq'] == 0:
-                if rank <= 0:
-                    model.save_training_state(epoch, current_step)
+            
                    
 
     if rank <= 0:
