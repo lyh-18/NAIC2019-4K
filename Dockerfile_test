@@ -18,6 +18,8 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y ffmpeg
 
-RUN sh run_test.sh
+COPY . /
+RUN chmod 777 /run_test.sh
+CMD ["/bin/bash", "-c", "/run_test.sh"]
     
 
