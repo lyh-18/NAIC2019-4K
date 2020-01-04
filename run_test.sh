@@ -17,7 +17,7 @@ do
  #echo $save_folder/${filename%.*}
  
  mkdir -p $save_png_folder/${filename%.*}
- ffmpeg -i $input_mp4_folder/$filename -r 30 $save_png_folder/${filename%.*}/%3d.png -y
+ ffmpeg -i $input_mp4_folder/$filename -r 24000/1001 $save_png_folder/${filename%.*}/%3d.png -y
  
  
 done
