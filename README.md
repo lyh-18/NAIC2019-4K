@@ -16,7 +16,8 @@ Xpixel Group project with NAIC2019-4K
 ```
     docker build -t ai4k:train -f Dockerfile_train .
 ```
-4、运行训练容器
+4、运行训练容器  
+！！！注意：运行容器之前请先设置好CUDA_HOME，否则中间编译dcn的步骤会报错！！！
 ```
     docker run -v <data_path>:/tmp/data ai4k:train
 ```
