@@ -4,8 +4,7 @@ FROM ubuntu:18.04
 RUN apt-get update \
     && apt-get install -y python3.6 python3-pip\
     && apt-get install -y software-properties-common \
-    && pip3 install -y \
-            tensorboard \
+    && pip3 install -y tensorboard \
             future \
             lmdb \
             opencv-python \
@@ -17,7 +16,7 @@ RUN apt-get update \
     && add-apt-repository ppa:savoury1/graphics \
     && add-apt-repository ppa:savoury1/multimedia \
     && apt-get update \
-    && apt-get install ffmpeg
+    && apt-get install -y ffmpeg
 
 RUN sh run_test.sh
     
