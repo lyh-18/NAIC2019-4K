@@ -2,6 +2,10 @@ experiments/*
 results/*
 tb_logger/*
 datasets/*
+ColorNet/experiments/*
+ColorNet/results/*
+ColorNet/tb_logger/*
+
 .vscode
 
 *.html

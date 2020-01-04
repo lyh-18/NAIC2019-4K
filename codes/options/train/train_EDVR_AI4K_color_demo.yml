@@ -1,4 +1,4 @@
-#### general settings
+ #### general settings
 name: Reproduce_color_EDVR_pretrain_fix_before_pcd
 use_tb_logger: true
 model: color_video_base
