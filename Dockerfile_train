@@ -4,7 +4,7 @@ FROM ubuntu:18.04
 RUN apt-get update \
     && apt-get install -y python3.6 python3-pip\
     && apt-get install -y software-properties-common \
-    && yum install libSM-1.2.2-2.el7.x86_64 --setopt=protected_multilib=false \
+    && apt-get install -y libsm6 libxrender1 libxext-dev \
     && pip3 install tensorboard \
             future \
             lmdb \
