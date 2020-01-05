@@ -31,7 +31,7 @@ datasets:
     name: REDS4
     mode: video_test
     dataroot_GT: /tmp/data/val1_HR_png_bic/
-    dataroot_LQ: /tmp/data/val2_LR_png_bic/
+    dataroot_LQ: /tmp/data/val1_LR_png_bic/
     cache_data: True
     N_frames: 5
     padding: new_info

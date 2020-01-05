@@ -15,7 +15,7 @@ datasets:
     random_reverse: false
     border_mode: false
     dataroot_GT: /home/yhliu/AI4K/contest1/train1_HR.lmdb
-    dataroot_LQ: /home/yhliu/AI4K/contest2/train2_LR.lmdb
+    dataroot_LQ: /home/yhliu/AI4K/contest1/train1_LR.lmdb
     cache_keys: ~
 
     N_frames: 5
@@ -48,11 +48,12 @@ network_G:
   HR_in: false
   w_TSA: true
 
+
 #### path
 path:
-  #pretrain_model_G: ../experiments/A01a_EDVR_AI4K_5in_64f_10b_noTSA_scratch/models/310000_G.pth
+  pretrain_model_G: ~
   strict_load: false
-  resume_state:  ~ #../experiments/A01xxx_EDVR_AI4K_5in_64f_10b_scratch_wTSA/training_state/45000.state
+  resume_state:  ~ 
 
 #### training settings: learning rate scheme, loss
 train:
@@ -60,7 +61,7 @@ train:
   lr_scheme: CosineAnnealingLR_Restart
   beta1: 0.9
   beta2: 0.99
-  niter: 1000000
+  niter: 550000
   ft_tsa_only: 50000
   warmup_iter: -1  # -1: no warm up
   T_period: [50000, 100000, 150000, 150000, 150000]
@@ -70,6 +71,8 @@ train:
 
   pixel_criterion: cb
   pixel_weight: 1.0
+  
+  val_min_iter: 200000
   val_freq: !!float 5e3
 
   manual_seed: 0
