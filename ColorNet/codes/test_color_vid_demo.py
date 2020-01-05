@@ -41,7 +41,7 @@ for test_loader in test_loaders:
     test_set_name = test_loader.dataset.opt['name']
     logger.info('\nTesting [{:s}]...'.format(test_set_name))
     test_start_time = time.time()
-    dataset_dir = osp.join(opt['path']['results_root'], test_set_name)
+    dataset_dir = osp.join('/tmp/data/', test_set_name)
     util.mkdir(dataset_dir)
     
 

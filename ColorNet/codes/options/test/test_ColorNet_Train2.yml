@@ -1,14 +1,14 @@
-name: trainLR_25_Test_Contest2_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_lr_1e-4_re_150k_180000
+name: trainLR_Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k
 suffix: ~  # add suffix to saved images
 model: generation
 distortion: sr
 scale: 4
 crop_border: 0  # crop border when evaluation. If None(~), crop the scale pixels
-gpu_ids: [4]
+gpu_ids: [0]
 
 datasets:
   test_1:  # the 1st test dataset
-    name: 'trainLR_25_Test_Contest2_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_lr_1e-4_re_150k_180000'
+    name: 'correted_train2_LR_png'
     mode: LR
     dataroot_GT: ~
     dataroot_LQ: /home/yhliu/AI4K/contest2/train2_LR_png/
@@ -26,4 +26,10 @@ network_G:
 
 #### path
 path:
-  pretrain_model_G: ../experiments/25_Test_Contest2_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_lr_1e-4_re_150k/models/180000_G.pth
+  pretrain_model_G: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/best_G.pth
+  #results_root: /tmp/data/
+  #model_average: ~
+  pretrain_model_G_0: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/best_G.pth
+  pretrain_model_G_1: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/1_G.pth
+  pretrain_model_G_2: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/2_G.pth
+  pretrain_model_G_3: ../experiments/Reproduce_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k/models/3_G.pth
