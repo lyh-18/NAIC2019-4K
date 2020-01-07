@@ -60,7 +60,7 @@ train:
   lr_scheme: CosineAnnealingLR_Restart
   beta1: 0.9
   beta2: 0.99
-  niter: 550000
+  niter: 400000
   ft_tsa_only: 50000
   warmup_iter: -1  # -1: no warm up
   T_period: [50000, 100000, 150000, 150000, 150000]
@@ -71,7 +71,7 @@ train:
   pixel_criterion: cb
   pixel_weight: 1.0
   
-  val_min_iter: 200000
+  val_min_iter: 100000
   val_freq: !!float 5e3
 
   manual_seed: 0

@@ -17,7 +17,7 @@ datasets:
     data_type: lmdb
     video_class: all     # all | movie | cartoon | lego
     dataroot_GT: /tmp/data/train1_HR.lmdb
-    dataroot_LQ: /tmp/data/train2_LR_correted.lmdb
+    dataroot_LQ: /tmp/data/train2_LR_corrected.lmdb
     cache_keys: ~
 
     N_frames: 5

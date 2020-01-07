@@ -45,8 +45,8 @@ def VideoSR(mode):
         lmdb_save_path = '/tmp/data/train1_HR.lmdb'
         H_dst, W_dst = 2160, 3840
     elif mode == 'LR':
-        img_folder = '/tmp/data/correted_train2_LR_png'
-        lmdb_save_path = '/tmp/data/train2_LR_corrected.lmdb'
+        img_folder = '/tmp/data/correted_train2_LR_png' #'/tmp/data/correted_train2_LR_png'
+        lmdb_save_path = '/tmp/data/train2_LR_corrected.lmdb' #'/tmp/data/train2_LR_corrected.lmdb'
         #img_folder = '/home/yhliu/BasicSR/results/trainLR_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000/trainLR_35_ResNet_alpha_beta_decoder_3x3_IN_encoder_8HW_re_100k_220000/'
         #lmdb_save_path = '/home/yhliu/AI4K/contest2/train2_LR_35_220000.lmdb'
         
