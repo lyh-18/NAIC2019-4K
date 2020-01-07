@@ -65,7 +65,7 @@ class SpyNet(torch.nn.Module):
         self.modulePreprocess = Preprocess()
         self.moduleBasic = torch.nn.ModuleList([Basic(intLevel) for intLevel in range(6)])
         if pretrain:
-            self.load_state_dict(torch.load('models/modules/SpyNet/network-sintel-final.pytorch'))
+            self.load_state_dict(torch.load('models/archs/SpyNet/network-sintel-final.pytorch'))
         self.moduleBasic = self.moduleBasic[:N_levels]
 
     def process(self, ref, supp):
