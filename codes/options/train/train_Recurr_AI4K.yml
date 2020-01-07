@@ -1,0 +1,78 @@
+#### general settings
+name: Recurr_C64B15N5
+use_tb_logger: true
+model: video_base
+distortion: sr
+scale: 4
+gpu_ids: [0,1,2,3]
+
+#### datasets
+datasets:
+  train:
+    name: AI4K_Recurr
+    mode: AI4K_Recurr
+    interval_list: [1]
+    random_reverse: false
+    border_mode: false
+    data_type: img
+    dataroot_GT: /home/yhliu/AI4K/contest1/train1_HR_png   #/home/yhliu/AI4K/contest1/train1_HR.lmdb
+    dataroot_LQ: /home/yhliu/AI4K/contest1/train1_LR_png       #/home/yhliu/AI4K/contest1/train1_LR.lmdb
+    cache_keys: ~
+
+    N_frames: 5
+    use_shuffle: true
+    n_workers: 16 #3  # per GPU
+    batch_size: 16
+    GT_size: 256
+    LQ_size: 64
+    use_flip: true
+    use_rot: true
+    color: RGB
+  # val:
+  #   name: REDS4
+  #   mode: video_test
+  #   dataroot_GT: /home/yhliu/AI4K/contest1/val1_HR_png_bic/
+  #   dataroot_LQ: /home/yhliu/AI4K/contest1/val1_LR_png_bic/
+  #   cache_data: True
+  #   N_frames: 5
+  #   padding: new_info
+
+#### network structures
+network_G:
+  which_model_G: Recurr_ResBlocks
+  nf: 64
+  N_RBs: 15
+  N_flow_lv: 6
+  pretrain_flow: true
+
+
+#### path
+path:
+  pretrain_model_G: ~
+  strict_load: false
+  resume_state:  ~
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_G: !!float 4e-4
+  lr_scheme: CosineAnnealingLR_Restart
+  flow_lr_decay: 0.125
+  beta1: 0.9
+  beta2: 0.99
+  niter: 600000
+  fix_flow_net: 50000
+  warmup_iter: -1  # -1: no warm up
+  T_period: [50000, 50000, 50000, 50000, 50000, 50000, 50000, 50000, 50000, 50000, 50000, 50000]
+  restarts: [50000, 100000, 150000, 200000, 250000, 300000, 350000, 400000, 450000, 500000, 550000]
+  restart_weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] # of initial learning rate
+  eta_min: !!float 1e-7
+
+  pixel_criterion: cb
+  pixel_weight: 1.0
+
+  manual_seed: 0
+
+#### logger
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 5000
