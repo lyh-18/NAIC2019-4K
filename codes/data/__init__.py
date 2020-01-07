@@ -37,6 +37,8 @@ def create_dataset(dataset_opt):
         from data.REDS_dataset import REDSDataset as D
     elif mode == 'AI4K':
         from data.AI4K_dataset import AI4KDataset as D
+    elif mode == 'AI4K_Recurr':
+        from data.AI4K_Recurr_dataset import AI4KDataset as D
     elif mode == 'Vimeo90K':
         from data.Vimeo90K_dataset import Vimeo90KDataset as D
     elif mode == 'video_test':

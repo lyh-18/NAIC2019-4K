@@ -4,6 +4,7 @@ import models.archs.discriminator_vgg_arch as SRGAN_arch
 import models.archs.RRDBNet_arch as RRDBNet_arch
 import models.archs.EDVR_arch as EDVR_arch
 import models.archs.my_EDVR_arch as my_EDVR_arch
+import models.archs.Recurr_arch as Recurr_arch
 
 
 # Generator
@@ -26,23 +27,26 @@ def define_G(opt):
                               predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'],
                               w_TSA=opt_net['w_TSA'])
     elif which_model == 'MY_EDVR_FusionDenoise':
-        netG = my_EDVR_arch.MYEDVR_FusionDenoise(nf=opt_net['nf'], nframes=opt_net['nframes'],
-                              groups=opt_net['groups'], front_RBs=opt_net['front_RBs'],
-                              back_RBs=opt_net['back_RBs'], center=opt_net['center'],
-                              predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'],
-                              w_TSA=opt_net['w_TSA'])
+        netG = my_EDVR_arch.MYEDVR_FusionDenoise(
+            nf=opt_net['nf'], nframes=opt_net['nframes'], groups=opt_net['groups'],
+            front_RBs=opt_net['front_RBs'], back_RBs=opt_net['back_RBs'], center=opt_net['center'],
+            predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'], w_TSA=opt_net['w_TSA'])
     elif which_model == 'MY_EDVR_RES':
         netG = my_EDVR_arch.MYEDVR_RES(nf=opt_net['nf'], nframes=opt_net['nframes'],
-                              groups=opt_net['groups'], front_RBs=opt_net['front_RBs'],
-                              back_RBs=opt_net['back_RBs'], center=opt_net['center'],
-                              predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'],
-                              w_TSA=opt_net['w_TSA'])
+                                       groups=opt_net['groups'], front_RBs=opt_net['front_RBs'],
+                                       back_RBs=opt_net['back_RBs'], center=opt_net['center'],
+                                       predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'],
+                                       w_TSA=opt_net['w_TSA'])
     elif which_model == 'MY_EDVR_PreEnhance':
-        netG = my_EDVR_arch.MYEDVR_PreEnhance(nf=opt_net['nf'], nframes=opt_net['nframes'],
-                              groups=opt_net['groups'], front_RBs=opt_net['front_RBs'],
-                              back_RBs=opt_net['back_RBs'], center=opt_net['center'],
-                              predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'],
-                              w_TSA=opt_net['w_TSA'])
+        netG = my_EDVR_arch.MYEDVR_PreEnhance(
+            nf=opt_net['nf'], nframes=opt_net['nframes'], groups=opt_net['groups'],
+            front_RBs=opt_net['front_RBs'], back_RBs=opt_net['back_RBs'], center=opt_net['center'],
+            predeblur=opt_net['predeblur'], HR_in=opt_net['HR_in'], w_TSA=opt_net['w_TSA'])
+
+    elif which_model == 'Recurr_ResBlocks':
+        netG = Recurr_arch.Recurr_ResBlocks(nf=opt_net['nf'], N_RBs=opt_net['N_RBs'],
+                                            N_flow_lv=opt_net['N_flow_lv'],
+                                            pretrain_flow=opt_net['pretrain_flow'])
     else:
         raise NotImplementedError('Generator model [{:s}] not recognized'.format(which_model))
 
@@ -59,6 +63,7 @@ def define_D(opt):
     else:
         raise NotImplementedError('Discriminator model [{:s}] not recognized'.format(which_model))
     return netD
+
 
 # pre color correction
 def define_C(opt):
