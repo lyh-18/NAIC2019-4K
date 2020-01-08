@@ -63,7 +63,7 @@ class Recurr_ResBlocks(nn.Module):
         self.lrelu = nn.LeakyReLU(negative_slope=0.1, inplace=True)
         self.sigmoid = nn.Sigmoid()
 
-    def forward(self, x):
+    def forward(self, x, is_val=False):
         '''
         Given N LR images, recurrently 4x upsample all N images.
             input:
@@ -121,6 +121,8 @@ class Recurr_ResBlocks(nn.Module):
             base = F.interpolate(x_current, scale_factor=4, mode='bilinear', align_corners=False)
             out += base
             out_l.append(out)
-
-        out = torch.stack(out_l, dim=1)
-        return out
+        if is_val:
+            return out_l
+        else:
+            out = torch.stack(out_l, dim=1)
+            return out

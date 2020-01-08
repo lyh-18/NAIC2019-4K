@@ -12,6 +12,8 @@ def create_model(opt):
     # video restoration
     elif model == 'video_base':
         from .Video_base_model import VideoBaseModel as M
+    elif model == 'video_recurr':
+        from .Video_recurr_model import VideoRecurrModel as M
     elif model == 'my_video_base':
         from .my_Video_base_model import VideoBaseModel as M
     elif model == 'my_video_pre_enhance':

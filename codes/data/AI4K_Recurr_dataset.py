@@ -97,7 +97,7 @@ class AI4KDataset(data.Dataset):
 
         assert self.paths_GT, 'Error: GT path is empty.'
         #rint((self.paths_GT))
-        print(len(self.paths_GT))
+        # print(len(self.paths_GT))
 
         if self.data_type == 'lmdb':
             self.GT_env, self.LQ_env = None, None
@@ -162,8 +162,8 @@ class AI4KDataset(data.Dataset):
 
         #### determine the neighbor frames
         interval = random.choice(self.interval_list)
-        while first_frame_idx + (self.N_frames - 1) * interval > 99:
-            first_frame_idx = random.randint(0, 99)
+        while first_frame_idx + (self.N_frames - 1) * interval > 100:
+            first_frame_idx = random.randint(1, 100)
         neighbor_list = list(
             range(first_frame_idx, first_frame_idx + self.N_frames * interval, interval))
         if self.random_reverse and random.random() < 0.5:

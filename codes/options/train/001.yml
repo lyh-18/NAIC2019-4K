@@ -1,10 +1,10 @@
 #### general settings
-name: Recurr_C64B15N5
+name: 001_Recurr_C64B15L3_lr4e-4
 use_tb_logger: true
-model: video_base
+model: video_recurr
 distortion: sr
 scale: 4
-gpu_ids: [0,1,2,3]
+gpu_ids: [4,5,6,7]
 
 #### datasets
 datasets:
@@ -15,11 +15,11 @@ datasets:
     random_reverse: false
     border_mode: false
     data_type: img
-    dataroot_GT: /home/yhliu/AI4K/contest1/train1_HR_png   #/home/yhliu/AI4K/contest1/train1_HR.lmdb
-    dataroot_LQ: /home/yhliu/AI4K/contest1/train1_LR_png       #/home/yhliu/AI4K/contest1/train1_LR.lmdb
+    dataroot_GT: /mnt/lustre/share/kckchan/Datasets/AI4K/train1_HR_png   #/home/yhliu/AI4K/contest1/train1_HR.lmdb
+    dataroot_LQ: /mnt/lustre/share/kckchan/Datasets/AI4K/train1_LR_png       #/home/yhliu/AI4K/contest1/train1_LR.lmdb
     cache_keys: ~
 
-    N_frames: 5
+    N_frames: 3
     use_shuffle: true
     n_workers: 16 #3  # per GPU
     batch_size: 16
