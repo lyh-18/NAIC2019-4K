@@ -56,6 +56,24 @@ lmdb
 tqdm  
 否则会报错。如果报错，可以定位到相应位置查看原因。具体每一个脚本可以 cat prepare_data.sh 查看后单独执行。
 
+数据处理具体的步骤：
+```
+#!/bin/bash
+
+sh extract_trainHR_frames_demo.sh       # 将初赛、复赛 HR 视频抽帧为png图片
+sh extract_trainLR_frames_demo.sh       # 将初赛、复赛 LR 视频抽帧为png图片
+
+sh get_val10_demo.sh                    # 从数据集中得到10个视频超分网络的验证集
+python3 get_video_bic_demo.py           # 为了在训练中进行validation，将10个验证集视频下采样为原图的1/2
+python3 create_color_val_demo.py        # 制作训练调色网络的验证集
+
+python3 create_lmdb_train1_LR_demo.py   # 为了加速io，我们将数据制作为lmdb格式，以下代码为将png图片转为lmdb格式
+python3 create_lmdb_train2_LR_demo.py
+python3 create_lmdb_train1_HR_demo.py
+```
+
+
+
 ## 2. 训练调色网络
 (1) 进入 ColorNet/codes 文件夹
 ```
