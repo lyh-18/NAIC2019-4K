@@ -132,6 +132,8 @@ def tensor2img(tensor, out_type=np.uint8, min_max=(0, 1)):
             'Only support 4D, 3D and 2D tensor. But received with dimension: {:d}'.format(n_dim))
     if out_type == np.uint8:
         img_np = (img_np * 255.0).round()
+    elif out_type == np.uint16:
+        img_np = (img_np * 65535.0).round()
         # Important. Unlike matlab, numpy.unit8() WILL NOT round by default.
     return img_np.astype(out_type)
 
@@ -231,6 +233,15 @@ def calculate_psnr(img1, img2):
     if mse == 0:
         return float('inf')
     return 20 * math.log10(255.0 / math.sqrt(mse))
+
+def calculate_psnr_uint16(img1, img2):
+    # img1 and img2 have range [0, 255]
+    img1 = img1.astype(np.float64)
+    img2 = img2.astype(np.float64)
+    mse = np.mean((img1 - img2)**2)
+    if mse == 0:
+        return float('inf')
+    return 20 * math.log10(65535.0 / math.sqrt(mse))
 
 
 def ssim(img1, img2):

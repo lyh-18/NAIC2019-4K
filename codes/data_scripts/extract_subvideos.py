@@ -31,13 +31,13 @@ def main():
         opt['thres_sz'] = 48  # size threshold
         extract_signle(opt)
     elif mode == 'pair':
-        GT_folder = '/home/yhliu/AI4K/contest1/train1_HR_png/'
-        LR_folder = '/home/yhliu/AI4K/contest1/train1_LR_png/'
-        save_GT_folder = '/data0/yhliu/AI4K/contest1/train1_HR_png_sub/'
-        save_LR_folder = '/data0/yhliu/AI4K/contest1/train1_LR_png_sub/'
+        GT_folder = '/data0/yhliu/AI4K/HDR_4k_png/'
+        LR_folder = '/home/yhliu/AI4K/correted_train2_LR_png/'
+        save_GT_folder = '/data1/yhliu/HDR_4k_png_sub/'
+        save_LR_folder = '/data1/yhliu/correted_train2_LR_png_sub/'
         scale_ratio = 4
         crop_sz = 480  # the size of each sub-image (GT)
-        step = 240  # step of the sliding crop window (GT)
+        step = 480  # step of the sliding crop window (GT)
         thres_sz = 48  # size threshold
         ########################################################################
         # check that all the GT and LR images have correct scale ratio
